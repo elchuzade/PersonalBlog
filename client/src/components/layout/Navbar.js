@@ -24,7 +24,7 @@ class Navbar extends Component {
       <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            Webinartrack
+            Elchuzade
           </Link>
           <button
             className="navbar-toggler"
@@ -39,11 +39,6 @@ class Navbar extends Component {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/webinars">
-                  All Webinars
-                </Link>
-              </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/blogs">
                   Blog

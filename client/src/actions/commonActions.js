@@ -1,9 +1,4 @@
-import {
-  GET_ERRORS,
-  GET_RESPONSE,
-  WEBINARS_LOADING,
-  BLOGS_LOADING
-} from './types';
+import { GET_ERRORS, GET_RESPONSE, BLOGS_LOADING } from './types';
 
 export const refreshErrors = () => {
   return {
@@ -35,11 +30,6 @@ export const getResponse = data => {
 
 export const setLoading = data => {
   switch (data) {
-    case 'webinar': {
-      return {
-        type: WEBINARS_LOADING
-      };
-    }
     case 'blog': {
       return {
         type: BLOGS_LOADING

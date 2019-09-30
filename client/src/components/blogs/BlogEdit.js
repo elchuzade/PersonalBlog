@@ -11,9 +11,7 @@ import isEmpty from '../../validation/is-empty';
 import {
   getBlog,
   uploadBlogAvatar,
-  uploadBlogCover,
   deleteBlogAvatar,
-  deleteBlogCover,
   updateBlog,
   deleteBlog
 } from '../../actions/blogActions';
@@ -25,14 +23,12 @@ class BlogEdit extends Component {
     super(props);
     this.state = {
       avatarObject: {},
-      coverObject: {},
       errors: {},
       name: '',
       intro: '',
       description: '',
       _id: '',
       avatar: '',
-      cover: '',
       createdAt: ''
     };
   }
@@ -56,14 +52,12 @@ class BlogEdit extends Component {
           ? blog.description
           : '';
       blog.avatar = !isEmpty(blog.avatar) ? blog.avatar : '';
-      blog.cover = !isEmpty(blog.cover) ? blog.cover : '';
       blog._id = !isEmpty(blog._id) ? blog._id : '';
       this.setState({
         title: blog.title,
         intro: blog.intro,
         description: blog.description,
         avatar: blog.avatar,
-        cover: blog.cover,
         _id: blog._id,
         createdAt: blog.createdAt
       });
@@ -88,14 +82,12 @@ class BlogEdit extends Component {
       intro: this.state.intro,
       description: this.state.description,
       avatar: this.state.avatar,
-      cover: this.state.cover,
       _id: this.state._id
     };
     this.props.updateBlog(
       blogData,
       this.props.history,
       this.state.avatarObject,
-      this.state.coverObject
     );
   };
   onDeleteBlog = e => {
@@ -112,57 +104,6 @@ class BlogEdit extends Component {
       this.setState({ errors: updatedErrors });
     }
   };
-  onChangeCover = e => {
-    e.preventDefault();
-    this.setState({ coverObject: e.target.files[0] });
-    if (this.state.errors && this.state.errors.cover) {
-      let updatedErrors = this.state.errors;
-      delete updatedErrors.cover;
-      this.setState({ errors: updatedErrors });
-    }
-  };
-  onSubmitAvatar = e => {
-    e.preventDefault();
-    if (this.state.avatarObject.name) {
-      const formData = new FormData();
-      formData.append('blogAvatar', this.state.avatarObject);
-      const configData = {
-        headers: {
-          'content-type': 'multipart/form/data'
-        }
-      };
-      this.props.uploadBlogAvatar(
-        formData,
-        configData,
-        this.props.blog.blog._id
-      );
-    } else {
-      let updatedErrors = this.state.errors;
-      updatedErrors.avatar = 'Choose image to upload';
-      this.setState({ errors: updatedErrors });
-    }
-  };
-  onSubmitCover = e => {
-    e.preventDefault();
-    if (this.state.coverObject.name) {
-      const formData = new FormData();
-      formData.append('blogCover', this.state.coverObject);
-      const configData = {
-        headers: {
-          'content-type': 'multipart/form/data'
-        }
-      };
-      this.props.uploadBlogCover(
-        formData,
-        configData,
-        this.props.blog.blog._id
-      );
-    } else {
-      let updatedErrors = this.state.errors;
-      updatedErrors.cover = 'Choose image to upload';
-      this.setState({ errors: updatedErrors });
-    }
-  };
   onClickDeleteAvatar = e => {
     e.preventDefault();
     if (this.state.avatarObject.name || this.state.avatar) {
@@ -171,17 +112,6 @@ class BlogEdit extends Component {
     } else {
       let updatedErrors = this.state.errors;
       updatedErrors.avatar = 'No image to delete';
-      this.setState({ errors: updatedErrors });
-    }
-  };
-  onClickDeleteCover = e => {
-    e.preventDefault();
-    if (this.state.coverObject.name || this.state.cover) {
-      this.props.deleteBlogCover(this.props.blog.blog._id);
-      this.setState({ coverObject: {} });
-    } else {
-      let updatedErrors = this.state.errors;
-      updatedErrors.cover = 'No image to delete';
       this.setState({ errors: updatedErrors });
     }
   };

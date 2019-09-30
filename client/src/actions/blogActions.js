@@ -9,7 +9,6 @@ import {
 } from './commonActions';
 
 export const getBlogs = () => dispatch => {
-  dispatch(setLoading('webinar'));
   dispatch(refreshErrors());
   axios
     .get('/api/blogs')

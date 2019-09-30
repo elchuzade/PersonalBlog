@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import {
   getBlog,
   uploadBlogAvatar,
-  uploadBlogCover,
   deleteBlogAvatar,
-  deleteBlogCover,
   editBlog
 } from '../../actions/blogActions';
 import Moment from 'react-moment';
@@ -23,12 +21,10 @@ class Blog extends Component {
       intro: '',
       description: '',
       avatar: '',
-      cover: '',
       _id: '',
       author: '',
       createdAt: '',
       avatarObject: {},
-      coverObject: {},
       errors: {},
       editBlog: false
     };
@@ -49,7 +45,6 @@ class Blog extends Component {
         intro: blog.intro,
         description: blog.description,
         avatar: blog.avatar,
-        cover: blog.cover,
         _id: blog._id,
         author: blog.author,
         createdAt: blog.createdAt,
@@ -124,47 +119,7 @@ class Blog extends Component {
       this.setState({ errors: updatedErrors });
     }
   };
-  onChangeCover = e => {
-    e.preventDefault();
-    this.setState({ coverObject: e.target.files[0] });
-    if (this.state.errors && this.state.errors.cover) {
-      let updatedErrors = this.state.errors;
-      delete updatedErrors.cover;
-      this.setState({ errors: updatedErrors });
-    }
-  };
-  onSubmitCover = e => {
-    e.preventDefault();
-    if (this.state.coverObject.name) {
-      const formData = new FormData();
-      formData.append('blogCover', this.state.coverObject);
-      const configData = {
-        headers: {
-          'content-type': 'multipart/form/data'
-        }
-      };
-      this.props.uploadBlogCover(
-        formData,
-        configData,
-        this.props.blogs.blog._id
-      );
-    } else {
-      let updatedErrors = this.state.errors;
-      updatedErrors.cover = 'Choose image to upload';
-      this.setState({ errors: updatedErrors });
-    }
-  };
-  onDeleteCover = e => {
-    e.preventDefault();
-    if (this.state.coverObject.name || this.props.blogs.blog.cover) {
-      this.props.deleteBlogCover(this.props.blogs.blog._id);
-      this.setState({ coverObject: {}, cover: '' });
-    } else {
-      let updatedErrors = this.state.errors;
-      updatedErrors.cover = 'No image to delete';
-      this.setState({ errors: updatedErrors });
-    }
-  };
+
   render() {
     const { blog, loading } = this.props.blogs;
     const { errors } = this.state;
@@ -247,49 +202,6 @@ class Blog extends Component {
                             <button
                               className="btn btn-danger mx-2"
                               onClick={this.onDeleteAvatar}
-                            >
-                              Delete
-                            </button>
-                            <button className="btn btn-info mx-2" type="submit">
-                              Upload
-                            </button>
-                          </div>
-                        </div>
-                      </form>
-                    )}
-                  </div>
-                </div>
-                {/* COVER */}
-                <div className="row mb-5">
-                  <div className="col-12 text-center">
-                    <img
-                      src={
-                        blog.cover
-                          ? blog.cover.location
-                          : 'https://picsum.photos/1200/300'
-                      }
-                      alt="cover"
-                      className="img-fluid"
-                    />
-                    {isAuthenticated && this.state.editBlog && (
-                      <form onSubmit={this.onSubmitCover}>
-                        <FileInputGroup
-                          name="blogCover"
-                          placeholder="Cover"
-                          onChange={this.onChangeCover}
-                          sendFile={this.state.coverObject}
-                          error={errors.cover}
-                          accept="image/png, image/jpg, image/jpeg"
-                        />
-                        <small className="text-muted">
-                          This image will be shown in landing page if the blog
-                          is premium
-                        </small>
-                        <div className="row mt-2 mb-5">
-                          <div className="col">
-                            <button
-                              className="btn btn-danger mx-2"
-                              onClick={this.onDeleteCover}
                             >
                               Delete
                             </button>
@@ -390,9 +302,7 @@ Blog.propTypes = {
   blogs: PropTypes.object.isRequired,
   getBlog: PropTypes.func.isRequired,
   uploadBlogAvatar: PropTypes.func.isRequired,
-  uploadBlogCover: PropTypes.func.isRequired,
   deleteBlogAvatar: PropTypes.func.isRequired,
-  deleteBlogCover: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
@@ -407,9 +317,7 @@ export default connect(
   {
     getBlog,
     uploadBlogAvatar,
-    uploadBlogCover,
     deleteBlogAvatar,
-    deleteBlogCover,
     editBlog
   }
 )(Blog);

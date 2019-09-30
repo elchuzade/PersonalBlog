@@ -29,16 +29,12 @@ class Footer extends Component {
               <div className="row">
                 <div className="col-12 mb-1">
                   <h4>
-                    Webinrtrack{' '}
-                    <span className="h6">- Only best webinars </span>
+                    Kamran Elchuzade <span className="h6">Personal Blog</span>
                   </h4>
                 </div>
                 <div className="col-12 mb-2">
                   <Link to="/" className="mr-2 text-white">
-                    Home
-                  </Link>
-                  <Link to="/webinars" className="mx-2 text-white">
-                    All Webinars
+                    Blog
                   </Link>
                   <Link to="/contacts" className="mx-2 text-white">
                     Contacts
@@ -46,15 +42,12 @@ class Footer extends Component {
                 </div>
                 <div className="col-12">
                   <p>
-                    Copyright &copy; {new Date().getFullYear()} WebinarTrack
+                    Copyright &copy; {new Date().getFullYear()} Kamran Elchuzade
                   </p>
                 </div>
               </div>
             </div>
             <div className="col-12 col-md-6 col-lg-5 mb-5 order-first order-md-2">
-              <p className="text-center">
-                Follow us to stay notified about upcoming webinars
-              </p>
               <form
                 className="text-center"
                 method="POST"
