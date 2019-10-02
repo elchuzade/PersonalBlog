@@ -44,14 +44,13 @@ const BlogSchema = new Schema(
     },
     body: [
       {
-        type: {
-          // type is either image or text
+        uid: {
           type: String,
           required: true
         },
-        index: {
-          // index is used to be able to order items and swap them
-          type: Number,
+        type: {
+          // type is either image or text
+          type: String,
           required: true
         },
         image: {

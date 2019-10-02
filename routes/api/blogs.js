@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const Blog = require('../../models/Blog');
+validateBlogBodyTextInput;
 const validateBlogInput = require('../../validation/blog');
+const validateBlogBodyTextInput = require('../../validation/blogBodyTextInput');
+const uuidv1 = require('uuid/v1');
 
 // AWS IMAGES
 const aws = require('aws-sdk');
@@ -135,11 +138,61 @@ router.post(
     }
     const bodyTextFields = {};
     if (req.body.type) blogFields.type = req.body.type;
-    if (req.body.index) blogFields.index = req.body.index;
     if (req.body.text) blogFields.text = req.body.text;
     Blog.findOne(req.params.id)
       .then(blog => {
+        bodyTextFields.uid = uuidv1();
         blog.body.push(bodyTextFields);
+        blog
+          .save()
+          .then(savedBlog => {
+            res.status(200).json({
+              item: savedBlog,
+              action: 'add',
+              message: 'Added blog body text'
+            });
+          })
+          .catch(err => {
+            errors.blog = 'Blog can not be saved';
+            console.log(err);
+            return res.status(400).json(errors);
+          });
+      })
+      .catch(err => {
+        errors.blog = 'Blog can not be saved';
+        console.log(err);
+        return res.status(400).json(errors);
+      });
+  }
+);
+
+// @route POST api/blogs/text/:id/:textId
+// @desc Add body item to the blog
+// @access Private / Admin
+router.put(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateBlogBodyTextInput(req.body);
+    // Check Validation
+    if (!isValid) {
+      // If any errors, send 400 with errors obj
+      return res.status(400).json(errors);
+    }
+    const bodyTextFields = {};
+    if (req.body.type) blogFields.type = req.body.type;
+    if (req.body.text) blogFields.text = req.body.text;
+    bodyTextFields.uid = req.params.textId;
+    Blog.findOne(req.params.id)
+      .then(blog => {
+        for (let i = 0; i < blog.body.length; i++) {
+          if (
+            blog.body[i].type == 'text' &&
+            blog.body[i].uid == req.params.textId
+          ) {
+            blog.body[i] = bodyTextFields;
+          }
+        }
         blog
           .save()
           .then(savedBlog => {
