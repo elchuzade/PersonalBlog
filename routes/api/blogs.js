@@ -9,6 +9,7 @@ const aws = require('aws-sdk');
 const config = require('../../config/keys');
 const upload = require('../files');
 const blogAvatar = upload.uploadBlogAvatar.single('blogAvatar');
+const blogImage = upload.uploadBlogImage.single('blogImage');
 
 aws.config.update({
   secretAccessKey: config.secretAccessKey,

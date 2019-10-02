@@ -30,5 +30,25 @@ const uploadBlogAvatar = multer({
     checkFileType(file, cb);
   }
 });
+const uploadBlogImage = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'elchuzade',
+    acl: 'public-read',
+    metadata: function(req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function(req, file, cb) {
+      var newFileName = Date.now() + '-' + file.originalname;
+      var fullPath = 'blogImage/' + newFileName;
+      cb(null, fullPath);
+    }
+  }),
+  limits: { fileSize: 2000000 },
+  fileFilter: function(req, file, cb) {
+    checkFileType(file, cb);
+  }
+});
 
 module.exports.uploadBlogAvatar = uploadBlogAvatar;
+module.exports.uploadBlogImage = uploadBlogImage;
