@@ -68,7 +68,6 @@ router.post(
     const blogFields = {};
     if (req.body.title) blogFields.title = req.body.title;
     if (req.body.intro) blogFields.intro = req.body.intro;
-    if (req.body.body) blogFields.body = req.body.body;
     if (req.body.author) blogFields.author = req.body.author;
     new Blog(blogFields)
       .save()
@@ -103,7 +102,6 @@ router.put(
     const blogFields = {};
     if (req.body.title) blogFields.title = req.body.title;
     if (req.body.intro) blogFields.intro = req.body.intro;
-    if (req.body.body) blogFields.body = req.body.body;
     if (req.body.author) blogFields.author = req.body.author;
     if (req.body.description) blogFields.description = req.body.description;
     Blog.findByIdAndUpdate(req.params.id, blogFields, { new: true })
@@ -116,6 +114,49 @@ router.put(
       })
       .catch(err => {
         errors.blog = 'Blog can not be updated';
+        console.log(err);
+        return res.status(400).json(errors);
+      });
+  }
+);
+
+// @route POST api/blogs/text/:id
+// @desc Add body item to the blog
+// @access Private / Admin
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateBlogBodyTextInput(req.body);
+    // Check Validation
+    if (!isValid) {
+      // If any errors, send 400 with errors obj
+      return res.status(400).json(errors);
+    }
+    const bodyTextFields = {};
+    if (req.body.type) blogFields.type = req.body.type;
+    if (req.body.index) blogFields.index = req.body.index;
+    if (req.body.text) blogFields.text = req.body.text;
+    Blog.findOne(req.params.id)
+      .then(blog => {
+        blog.body.push(bodyTextFields);
+        blog
+          .save()
+          .then(savedBlog => {
+            res.status(200).json({
+              item: savedBlog,
+              action: 'add',
+              message: 'Added blog body text'
+            });
+          })
+          .catch(err => {
+            errors.blog = 'Blog can not be saved';
+            console.log(err);
+            return res.status(400).json(errors);
+          });
+      })
+      .catch(err => {
+        errors.blog = 'Blog can not be saved';
         console.log(err);
         return res.status(400).json(errors);
       });
