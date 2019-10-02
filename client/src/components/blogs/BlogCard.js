@@ -23,7 +23,7 @@ class BlogCard extends Component {
               src={
                 blog.avatar
                   ? `${blog.avatar.location}`
-                  : 'https://picsum.photos/400'
+                  : 'https://picsum.photos/600/200'
               }
               alt="Main"
             />

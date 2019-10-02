@@ -131,7 +131,7 @@ class Blogs extends Component {
                     {blogs.map(blog => (
                       <div
                         key={blog._id}
-                        className="col-12 col-md-6 col-lg-4 mb-3"
+                        className="col-12 col-md-6 mb-3"
                       >
                         <BlogCard
                           key={blog._id}

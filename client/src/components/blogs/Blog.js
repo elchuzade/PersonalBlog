@@ -19,6 +19,7 @@ class Blog extends Component {
     this.state = {
       title: '',
       intro: '',
+      body: '',
       description: '',
       avatar: '',
       _id: '',
@@ -43,6 +44,7 @@ class Blog extends Component {
       this.setState({
         title: blog.title,
         intro: blog.intro,
+        body: blog.body,
         description: blog.description,
         avatar: blog.avatar,
         _id: blog._id,
@@ -60,6 +62,7 @@ class Blog extends Component {
     const blogData = {
       title: this.state.title,
       intro: this.state.intro,
+      body: this.state.body,
       author: this.state.author,
       description: this.state.description
     };
@@ -172,17 +175,15 @@ class Blog extends Component {
                 {/* AVATAR */}
                 <div className="row mb-5">
                   <div className="col-12 text-center">
-                    {isAuthenticated && this.state.editBlog && (
-                      <img
-                        src={
-                          blog.avatar
-                            ? blog.avatar.location
-                            : 'https://picsum.photos/300/300'
-                        }
-                        alt="avatar"
-                        className="img-fluid"
-                      />
-                    )}
+                    <img
+                      src={
+                        blog.avatar
+                          ? blog.avatar.location
+                          : 'https://picsum.photos/1200/300'
+                      }
+                      alt="avatar"
+                      className="img-fluid"
+                    />
                     {isAuthenticated && this.state.editBlog && (
                       <form onSubmit={this.onSubmitAvatar}>
                         <FileInputGroup
@@ -284,6 +285,11 @@ class Blog extends Component {
                             {this.state.createdAt}
                           </Moment>
                         </i>
+                      </p>
+                    </div>
+                    <div className="col-12">
+                      <p className="lead text-center mx-2 mx-md-5">
+                        {this.state.body}
                       </p>
                     </div>
                   </div>

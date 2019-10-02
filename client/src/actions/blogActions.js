@@ -24,7 +24,6 @@ export const getBlogs = () => dispatch => {
 };
 
 export const getBlog = id => dispatch => {
-  dispatch(setLoading('webinar'));
   dispatch(refreshErrors());
   axios
     .get(`/api/blogs/${id}`)
