@@ -5,7 +5,7 @@ const Blog = require('../../models/Blog');
 validateBlogBodyTextInput;
 const validateBlogInput = require('../../validation/blog');
 const validateBlogBodyTextInput = require('../../validation/blogBodyTextInput');
-const uuidv1 = require('uuid/v1');
+const uuid = require('uuid/v1');
 
 // AWS IMAGES
 const aws = require('aws-sdk');
@@ -127,7 +127,7 @@ router.put(
 // @desc Add body item to the blog
 // @access Private / Admin
 router.post(
-  '/',
+  '/text/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { errors, isValid } = validateBlogBodyTextInput(req.body);
@@ -141,7 +141,7 @@ router.post(
     if (req.body.text) blogFields.text = req.body.text;
     Blog.findOne(req.params.id)
       .then(blog => {
-        bodyTextFields.uid = uuidv1();
+        bodyTextFields.uid = uuid();
         blog.body.push(bodyTextFields);
         blog
           .save()
@@ -170,7 +170,7 @@ router.post(
 // @desc Add body item to the blog
 // @access Private / Admin
 router.put(
-  '/',
+  '/text/:id/:textId',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { errors, isValid } = validateBlogBodyTextInput(req.body);
@@ -209,7 +209,45 @@ router.put(
           });
       })
       .catch(err => {
-        errors.blog = 'Blog can not be saved';
+        errors.blog = 'Blog can not be found';
+        console.log(err);
+        return res.status(400).json(errors);
+      });
+  }
+);
+
+// @route DELETE api/blogs/text/:id/:textId
+// @desc Delete body item of the blog
+// @access Private / Admin
+router.delete(
+  '/text/:id/:textId',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+    Blog.findOne(req.params.id)
+      .then(blog => {
+        for (let i = 0; i < blog.body.length; i++) {
+          if (blog.body.type == 'text' && blog.body.uid == req.params.textId) {
+            blog.body.splice(i, 1);
+          }
+        }
+        blog
+          .save()
+          .then(savedBlog => {
+            res.status(200).json({
+              item: savedBlog,
+              action: 'delete',
+              message: 'Deleted blog body text'
+            });
+          })
+          .catch(err => {
+            errors.blog = 'Blog can not be saved';
+            console.log(err);
+            return res.status(400).json(errors);
+          });
+      })
+      .catch(err => {
+        errors.blog = 'Blog can not be found';
         console.log(err);
         return res.status(400).json(errors);
       });
