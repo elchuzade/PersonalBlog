@@ -44,10 +44,6 @@ const BlogSchema = new Schema(
     },
     body: [
       {
-        uid: {
-          type: String,
-          required: true
-        },
         type: {
           // type is either image or text
           type: String,
