@@ -3,7 +3,6 @@ const router = express.Router();
 const passport = require('passport');
 const Blog = require('../../models/Blog');
 const validateBlogInput = require('../../validation/blog');
-const validateBlogBodyTextInput = require('../../validation/blogBodyTextInput');
 
 // AWS IMAGES
 const aws = require('aws-sdk');
@@ -31,7 +30,7 @@ router.get('/', (req, res) => {
       res.json(allBlogs);
     })
     .catch(err => {
-      errors.blogsnotfound = 'Blogs not found';
+      errors.blog = 'Blogs not found';
       console.log(err);
       res.status(404).json(errors);
     });
@@ -47,7 +46,7 @@ router.get('/:id', (req, res) => {
       res.json(foundBlog);
     })
     .catch(err => {
-      errors.blognotfound = 'Blog not found';
+      errors.blog = 'Blog not found';
       console.log(err);
       res.status(404).json(errors);
     });
@@ -128,14 +127,9 @@ router.post(
   '/text/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    const { errors, isValid } = validateBlogBodyTextInput(req.body);
-    // Check Validation
-    if (!isValid) {
-      // If any errors, send 400 with errors obj
-      return res.status(400).json(errors);
-    }
+    const errors = {};
     const bodyTextFields = {};
-    if (req.body.type) bodyTextFields.type = req.body.type;
+    if (req.body.type) bodyTextFields.type = 'text';
     if (req.body.text) bodyTextFields.text = req.body.text;
     Blog.findById(req.params.id)
       .then(blog => {
@@ -170,12 +164,7 @@ router.put(
   '/text/:id/:textId',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    const { errors, isValid } = validateBlogBodyTextInput(req.body);
-    // Check Validation
-    if (!isValid) {
-      // If any errors, send 400 with errors obj
-      return res.status(400).json(errors);
-    }
+    const errors = {};
     Blog.findById(req.params.id)
       .then(blog => {
         for (let i = 0; i < blog.body.length; i++) {
@@ -304,7 +293,7 @@ router.delete(
         }
       })
       .catch(err => {
-        errors.blognotfound = 'Blog not found';
+        errors.blog = 'Blog not found';
         console.log(err);
         res.status(404).json(errors);
       });
@@ -359,7 +348,7 @@ router.post(
                   )
                   .catch(err => {
                     console.log(err);
-                    errors.blognotsaved = 'Blog not saved';
+                    errors.blog = 'Blog not saved';
                     return res.status(404).json(errors);
                   });
               });
@@ -392,7 +381,7 @@ router.post(
               )
               .catch(err => {
                 console.log(err);
-                errors.blognotsaved = 'Blog not saved';
+                errors.blog = 'Blog not saved';
                 return res.status(404).json(errors);
               });
           });
@@ -435,7 +424,7 @@ router.delete(
                 )
                 .catch(err => {
                   console.log(err);
-                  errors.blognotsaved = 'Blog not saved';
+                  errors.blog = 'Blog not saved';
                   return res.status(404).json(errors);
                 });
             }
@@ -447,7 +436,167 @@ router.delete(
       })
       .catch(err => {
         console.log(err);
-        errors.blognotfound = 'Blog not found';
+        errors.blog = 'Blog not found';
+        return res.status(404).json(errors);
+      });
+  }
+);
+
+// @route POST api/blogs/image/:id
+// @desc Upload blog body image
+// @access Private / Admin
+router.post(
+  '/image/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+    Blog.findById(req.params.id)
+      .then(blog => {
+        blogImage(req, res, err => {
+          if (err) {
+            console.log(err);
+            errors.uploadfail = 'Failed to upload an image';
+            return res.json(errors);
+          }
+          if (req.file == undefined) {
+            console.log(err);
+            errors.selectfail = 'No file selected';
+            return res.json(errors);
+          }
+          let newImage = {};
+          newImage.location = req.file.location;
+          newImage.key = req.file.key;
+          newImage.bucket = req.file.bucket;
+          newImage.originalname = req.file.originalname;
+          newImage.mimetype = req.file.mimetype;
+          newImage.size = req.file.size;
+          newImage.fieldName = req.file.metadata.fieldName;
+          let newElement = {};
+          newElement.type = 'image';
+          newElement.image = newImage;
+          blog.body.push(newElement);
+          blog
+            .save()
+            .then(blog => res.status(200).json(blog))
+            .catch(err => {
+              console.log(err);
+              errors.blog = 'Blog not saved';
+              return res.status(404).json(errors);
+            });
+        });
+      })
+      .catch(err => {
+        errors.blog = 'Blog not found';
+        console.log(err);
+        return res.status(400).json(errors);
+      });
+  }
+);
+
+// @route PUT api/blogs/image/:id/:imageId
+// @desc Upload blog body image
+// @access Private / Admin
+router.put(
+  '/image/:id/:imageId',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+    Blog.findById(req.params.id)
+      .then(blog => {
+        for (let i = 0; i < blog.body.length; i++) {
+          if (blog.body[i]._id == req.params.imageId) {
+            const params = {
+              Bucket: blog.body[i].image.bucket,
+              Delete: {
+                Objects: [{ Key: blog.body[i].image.key }]
+              }
+            };
+            s3.deleteObjects(params, (err, data) => {
+              if (err) {
+                console.log(err);
+              } else {
+                blogImage(req, res, err => {
+                  if (err) {
+                    console.log(err);
+                    errors.uploadfail = 'Failed to upload an image';
+                    return res.json(errors);
+                  }
+                  if (req.file == undefined) {
+                    console.log(err);
+                    errors.selectfail = 'No file selected';
+                    return res.json(errors);
+                  }
+                  let newImage = {};
+                  newImage.location = req.file.location;
+                  newImage.key = req.file.key;
+                  newImage.bucket = req.file.bucket;
+                  newImage.originalname = req.file.originalname;
+                  newImage.mimetype = req.file.mimetype;
+                  newImage.size = req.file.size;
+                  newImage.fieldName = req.file.metadata.fieldName;
+                  blog
+                    .save()
+                    .then(blog => res.status(200).json(blog))
+                    .catch(err => {
+                      console.log(err);
+                      errors.blog = 'Blog not saved';
+                      return res.status(404).json(errors);
+                    });
+                });
+              }
+            });
+          }
+        }
+      })
+      .catch(err => {
+        errors.blog = 'Blog not found';
+        console.log(err);
+        return res.status(400).json(errors);
+      });
+  }
+);
+
+// @route DELETE api/blogs/image/:id/:imageId
+// @desc Delete blog body image
+// @access Private / Admin
+router.delete(
+  '/image/:id/:imageId',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+    Blog.findById(req.params.id)
+      .then(blog => {
+        for (let i = 0; i < blog.body.length; i++) {
+          if (blog.body[i]._id == req.params.imageId) {
+            const params = {
+              Bucket: blog.body[i].image.bucket,
+              Delete: {
+                Objects: [{ Key: blog.body[i].image.key }]
+              }
+            };
+            s3.deleteObjects(params, (err, data) => {
+              if (err) {
+                console.log(err);
+              } else {
+                blog.body.splice(i, 1);
+                blog
+                  .save()
+                  .then(deletedAvatarBlog =>
+                    res.status(200).json(deletedAvatarBlog)
+                  )
+                  .catch(err => {
+                    console.log(err);
+                    errors.blog = 'Blog not saved';
+                    return res.status(404).json(errors);
+                  });
+              }
+            });
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        errors.blog = 'Blog not found';
         return res.status(404).json(errors);
       });
   }
