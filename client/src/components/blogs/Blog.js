@@ -5,27 +5,34 @@ import {
   getBlog,
   uploadBlogAvatar,
   deleteBlogAvatar,
-  editBlog
+  editBlog,
+  editTextElement,
+  deleteTextElement,
+  addTextElement
 } from '../../actions/blogActions';
 import Moment from 'react-moment';
+import { refreshErrors } from '../../actions/commonActions';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import FileInputGroup from '../common/FileInputGroup';
 import TextInput from '../common/TextInput';
-import TextareaInput from '../common/TextareaInput';
 import ReactQuill from 'react-quill';
 
 class Blog extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      modal: false,
       title: '',
       intro: '',
-      body: '',
-      description: '',
+      body: [],
       avatar: '',
       _id: '',
       author: '',
       createdAt: '',
+      text: '',
+      elementId: '',
       avatarObject: {},
+      imageObject: {},
       errors: {},
       editBlog: false
     };
@@ -45,7 +52,6 @@ class Blog extends Component {
         title: blog.title,
         intro: blog.intro,
         body: blog.body,
-        description: blog.description,
         avatar: blog.avatar,
         _id: blog._id,
         author: blog.author,
@@ -54,17 +60,55 @@ class Blog extends Component {
       });
     }
   }
+  openModal = e => {
+    e.preventDefault();
+    if (!this.state.modal) {
+      this.setState({ modal: true });
+    }
+  };
+  submitModal = e => {
+    e.preventDefault();
+    let obj = {};
+    obj.text = this.state.text;
+    if (this.state.editBlog) {
+      this.props.editTextElement(this.state._id, this.state.elementId, obj);
+    } else {
+      this.props.addTextElement(this.state._id, obj);
+    }
+  };
+  resetModal = () => {
+    this.setState({
+      modal: false,
+      text: ''
+    });
+  };
+  toggleModal = e => {
+    e.preventDefault();
+    if (this.state.modal) {
+      this.props.refreshErrors();
+      this.setState({ modal: false });
+    }
+  };
+  DeleteTextElement = (e, elementId) => {
+    e.preventDefault();
+    this.props.deleteTextElement(this.state._id, elementId);
+  };
   onChangeQuill = value => {
-    this.setState({ description: value });
+    this.setState({ intro: value });
+  };
+  onChangeTextElementQuill = value => {
+    this.setState({ text: value });
+  };
+  OpenTextElementModal = (e, id, text) => {
+    e.preventDefault();
+    this.setState({ elementId: id, text: text, modal: true });
   };
   onSubmit = e => {
     e.preventDefault();
     const blogData = {
       title: this.state.title,
       intro: this.state.intro,
-      body: this.state.body,
-      author: this.state.author,
-      description: this.state.description
+      author: this.state.author
     };
     this.props.editBlog(this.state._id, blogData);
   };
@@ -119,6 +163,16 @@ class Blog extends Component {
     } else {
       let updatedErrors = this.state.errors;
       updatedErrors.avatar = 'No image to delete';
+      this.setState({ errors: updatedErrors });
+    }
+  };
+  // FIX ERRORS LATER
+  onChangeImage = e => {
+    e.preventDefault();
+    this.setState({ imageObject: e.target.files[0] });
+    if (this.state.errors && this.state.errors.image) {
+      let updatedErrors = this.state.errors;
+      delete updatedErrors.image;
       this.setState({ errors: updatedErrors });
     }
   };
@@ -217,48 +271,117 @@ class Blog extends Component {
                 </div>
                 {/* DETAILS IF ELSE ADMIN*/}
                 {isAuthenticated && this.state.editBlog ? (
-                  <div className="row mb-3">
-                    <form className="w-100" onSubmit={this.onSubmit}>
-                      <div className="col-12 form-group">
-                        <TextInput
-                          value={this.state.title}
-                          onChange={this.onChange}
-                          name="title"
-                          extraClass="text-center"
-                          placeholder="Blog Title"
-                          error={errors.blogName}
-                        />
-                        <small className="text-muted">Blog title</small>
-                      </div>
-                      <div className="col-12 form-group">
-                        <TextareaInput
-                          name="intro"
-                          value={this.state.intro}
-                          onChange={this.onChange}
-                          placeholder="Blog Introduction"
-                          error={errors.blogIntro}
-                          extraClass="text-center"
-                        />
-                        <small className="text-muted">Blog introduction</small>
-                      </div>
-                      <div className="col-12 form-group">
-                        <ReactQuill
-                          value={this.state.description || ''}
-                          onChange={this.onChangeQuill}
-                        />
-                        <small className="text-muted">Blog description</small>
-                      </div>
-                      <div>
-                        <p className="text-muted">
-                          <i>
-                            <span>Posted on </span>
-                            <Moment format="D MMM YYYY" withTitle>
-                              {this.state.createdAt}
-                            </Moment>
-                          </i>
-                        </p>
-                      </div>
-                    </form>
+                  <div>
+                    <div className="row mb-3">
+                      <form className="w-100" onSubmit={this.onSubmit}>
+                        <div className="col-12 form-group">
+                          <TextInput
+                            value={this.state.title}
+                            onChange={this.onChange}
+                            name="title"
+                            extraClass="text-center"
+                            placeholder="Blog Title"
+                            error={errors.blogName}
+                          />
+                          <small className="text-muted">Blog title</small>
+                        </div>
+                        <div className="col-12 form-group">
+                          <ReactQuill
+                            value={this.state.intro || ''}
+                            onChange={this.onChangeQuill}
+                          />
+                          <small className="text-muted">
+                            Blog introduction
+                          </small>
+                        </div>
+                        <div>
+                          <p className="text-muted">
+                            <i>
+                              <span>Posted on </span>
+                              <Moment format="D MMM YYYY" withTitle>
+                                {this.state.createdAt}
+                              </Moment>
+                            </i>
+                          </p>
+                        </div>
+                      </form>
+                    </div>
+                    <div className="col-12">
+                      {blog.body.map(element => (
+                        <div key={element._id}>
+                          {element.type == 'text' ? (
+                            <div>
+                              <div
+                                className="lead text-center mx-2 mx-md-5"
+                                dangerouslySetInnerHTML={{
+                                  __html: element.text
+                                }}
+                              ></div>
+                              <div className="row mt-2 mb-5">
+                                <div className="col">
+                                  <button
+                                    className="btn btn-danger mx-2"
+                                    onClick={(e, id = element._id) =>
+                                      this.DeleteTextElement(e, id)
+                                    }
+                                  >
+                                    Delete
+                                  </button>
+                                  <button
+                                    className="btn btn-info mx-2"
+                                    onClick={(
+                                      e,
+                                      id = element._id,
+                                      text = element.text
+                                    ) => this.OpenTextElementModal(e, id, text)}
+                                  >
+                                    Update
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            <div>
+                              <img
+                                src={
+                                  element.image.location
+                                    ? element.image.location
+                                    : 'https://picsum.photos/1200/300'
+                                }
+                                alt="image"
+                                className="img-fluid"
+                              />
+                              <form onSubmit={this.onSubmitImage}>
+                                <FileInputGroup
+                                  name="blogImage"
+                                  placeholder="Image"
+                                  onChange={this.onChangeImage}
+                                  sendFile={this.state.imageObject}
+                                  error={errors.image}
+                                  accept="image/png, image/jpg, image/jpeg"
+                                />
+                                <div className="row mt-2 mb-5">
+                                  <div className="col">
+                                    <button
+                                      className="btn btn-danger mx-2"
+                                      onClick={this.onDeleteImage}
+                                    >
+                                      Delete
+                                    </button>
+                                    <button
+                                      className="btn btn-info mx-2"
+                                      type="submit"
+                                    >
+                                      Upload
+                                    </button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ) : (
                   <div className="row mb-3">
@@ -269,15 +392,14 @@ class Blog extends Component {
                       <p className="text-muted mt-3">by {this.state.author}</p>
                     </div>
                     <div className="col-12">
-                      <p className="lead text-center mx-2 mx-md-5">
-                        {this.state.intro}
-                      </p>
                       <div
-                        className="mx-2 mx-md-5"
+                        className="lead text-center mx-2 mx-md-5"
                         dangerouslySetInnerHTML={{
-                          __html: this.state.description
+                          __html: this.state.intro
                         }}
-                      />
+                      ></div>
+                    </div>
+                    <div className="col-12">
                       <p className="text-muted mx-2 mx-md-5 mt-2">
                         <i>
                           <span>Posted on </span>
@@ -311,6 +433,56 @@ class Blog extends Component {
             </section>
           </React.Fragment>
         )}
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggleModal}
+          size="lg"
+          onClosed={this.resetModal}
+        >
+          <form onSubmit={this.submitModal}>
+            <ModalHeader className="text-info">
+              {this.state.edit ? <span>Edit</span> : <span>Add</span>} Element
+            </ModalHeader>
+            <ModalBody>
+              <div className="container">
+                <div className="row">
+                  <div className="col-12">
+                    <div className="form-group">
+                      <ReactQuill
+                        value={this.state.text || ''}
+                        onChange={this.onChangeTextElementQuill}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ModalBody>
+            <ModalFooter>
+              <button className="btn mainButton" type="submit">
+                Submit
+              </button>
+              <button
+                className="btn btn-danger"
+                type="button"
+                onClick={this.toggleModal}
+              >
+                Cancel
+              </button>
+            </ModalFooter>
+          </form>
+        </Modal>
+        <div className="row my-3">
+          <div className="col-12">
+            <h3 className="text-center">
+              {isAuthenticated && (
+                <button className="btn btn-info mr-3" onClick={this.openModal}>
+                  <i className="fas fa-plus" />
+                </button>
+              )}
+              Text Element
+            </h3>
+          </div>
+        </div>
       </div>
     );
   }
@@ -322,7 +494,12 @@ Blog.propTypes = {
   getBlog: PropTypes.func.isRequired,
   uploadBlogAvatar: PropTypes.func.isRequired,
   deleteBlogAvatar: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  editBlog: PropTypes.func.isRequired,
+  editTextElement: PropTypes.func.isRequired,
+  deleteTextElement: PropTypes.func.isRequired,
+  addTextElement: PropTypes.func.isRequired,
+  refreshErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -337,6 +514,10 @@ export default connect(
     getBlog,
     uploadBlogAvatar,
     deleteBlogAvatar,
-    editBlog
+    editBlog,
+    editTextElement,
+    deleteTextElement,
+    addTextElement,
+    refreshErrors
   }
 )(Blog);

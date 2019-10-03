@@ -99,23 +99,30 @@ router.put(
       // If any errors, send 400 with errors obj
       return res.status(400).json(errors);
     }
-    const blogFields = {};
-    if (req.body.title) blogFields.title = req.body.title;
-    if (req.body.intro) blogFields.intro = req.body.intro;
-    if (req.body.author) blogFields.author = req.body.author;
-    if (req.body.description) blogFields.description = req.body.description;
-    Blog.findByIdAndUpdate(req.params.id, blogFields, { new: true })
-      .then(updatedBlog => {
-        res.status(200).json({
-          item: updatedBlog,
-          action: 'update',
-          message: 'Updated blog'
-        });
+    Blog.findById(req.params.id)
+      .then(blog => {
+        blog.title = req.body.title;
+        blog.intro = req.body.intro;
+        blog.author = req.body.author;
+        blog
+          .save()
+          .then(updatedBlog => {
+            res.status(200).json({
+              item: updatedBlog,
+              action: 'update',
+              message: 'Updated blog'
+            });
+          })
+          .catch(err => {
+            errors.blog = 'Blog can not be updated';
+            console.log(err);
+            return res.status(400).json(errors);
+          });
       })
       .catch(err => {
-        errors.blog = 'Blog can not be updated';
+        errors.blog = 'Blog not found';
         console.log(err);
-        return res.status(400).json(errors);
+        return res.status(404).json(errors);
       });
   }
 );
@@ -129,7 +136,7 @@ router.post(
   (req, res) => {
     const errors = {};
     const bodyTextFields = {};
-    if (req.body.type) bodyTextFields.type = 'text';
+    bodyTextFields.type = 'text';
     if (req.body.text) bodyTextFields.text = req.body.text;
     Blog.findById(req.params.id)
       .then(blog => {
@@ -177,8 +184,8 @@ router.put(
           .then(savedBlog => {
             res.status(200).json({
               item: savedBlog,
-              action: 'add',
-              message: 'Added blog body text'
+              action: 'update',
+              message: 'Updated blog body text'
             });
           })
           .catch(err => {

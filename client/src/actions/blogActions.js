@@ -120,3 +120,52 @@ export const deleteBlogAvatar = id => dispatch => {
       dispatch(getError(err.response.data));
     });
 };
+
+export const editTextElement = (blogId, elementId, text) => dispatch => {
+  dispatch(refreshErrors());
+  dispatch(refreshResponse());
+  axios
+    .put(`/api/blogs/text/${blogId}/${elementId}`, text)
+    .then(res => {
+      dispatch({
+        type: GET_BLOG,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(getError(err.response.data));
+    });
+};
+
+export const deleteTextElement = (blogId, elementId) => dispatch => {
+  dispatch(refreshErrors());
+  dispatch(refreshResponse());
+  axios
+    .delete(`/api/blogs/text/${blogId}/${elementId}`)
+    .then(res => {
+      console.log(res.data);
+      dispatch({
+        type: GET_BLOG,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(getError(err.response.data));
+    });
+};
+
+export const addTextElement = (blogId, text) => dispatch => {
+  dispatch(refreshErrors());
+  dispatch(refreshResponse());
+  axios
+    .post(`/api/blogs/text/${blogId}/`, text)
+    .then(res => {
+      dispatch({
+        type: GET_BLOG,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(getError(err.response.data));
+    });
+};
