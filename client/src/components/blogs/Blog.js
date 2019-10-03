@@ -75,6 +75,7 @@ class Blog extends Component {
     } else {
       this.props.addTextElement(this.state._id, obj);
     }
+    this.resetModal();
   };
   resetModal = () => {
     this.setState({
@@ -414,7 +415,12 @@ class Blog extends Component {
                         <div key={element._id}>
                           {element.type == 'text' ? (
                             <div>
-                              <p>{element.text}</p>
+                              <div
+                                className="lead text-center mx-2 mx-md-5"
+                                dangerouslySetInnerHTML={{
+                                  __html: element.text
+                                }}
+                              ></div>
                             </div>
                           ) : (
                             <div>

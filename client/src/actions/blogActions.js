@@ -129,7 +129,7 @@ export const editTextElement = (blogId, elementId, text) => dispatch => {
     .then(res => {
       dispatch({
         type: GET_BLOG,
-        payload: res.data
+        payload: res.data.item
       });
     })
     .catch(err => {
@@ -143,10 +143,9 @@ export const deleteTextElement = (blogId, elementId) => dispatch => {
   axios
     .delete(`/api/blogs/text/${blogId}/${elementId}`)
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: GET_BLOG,
-        payload: res.data
+        payload: res.data.item
       });
     })
     .catch(err => {
@@ -162,7 +161,7 @@ export const addTextElement = (blogId, text) => dispatch => {
     .then(res => {
       dispatch({
         type: GET_BLOG,
-        payload: res.data
+        payload: res.data.item
       });
     })
     .catch(err => {
