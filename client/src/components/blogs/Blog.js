@@ -288,9 +288,22 @@ class Blog extends Component {
                       </p>
                     </div>
                     <div className="col-12">
-                      <p className="lead text-center mx-2 mx-md-5">
-                        {this.state.body}
-                      </p>
+                      {blog.body.map(element => (
+                        <div key={element._id}>
+                          {element.type == 'text' ? (
+                            <div>
+                              <p>{element.text}</p>
+                            </div>
+                          ) : (
+                            <div>
+                              <img
+                                src={element.image.location}
+                                alt="image icon"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}

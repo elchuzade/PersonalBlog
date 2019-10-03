@@ -205,10 +205,10 @@ router.delete(
     const errors = {};
     Blog.findById(req.params.id)
       .then(blog => {
-        var newBlogBody = blog.body.filter(
+        var newbody = blog.body.filter(
           element => element._id != req.params.textId
         );
-        blog.body = newBlogBody;
+        blog.body = newbody;
         blog
           .save()
           .then(savedBlog => {
