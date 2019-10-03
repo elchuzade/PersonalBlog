@@ -319,82 +319,90 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const errors = {};
-    Blog.findById(req.params.id).then(blog => {
-      if (blog.avatar && blog.avatar.key) {
-        // Delete blog avatar
-        const params = {
-          Bucket: blog.avatar.bucket,
-          Delete: {
-            Objects: [{ Key: blog.avatar.key }]
-          }
-        };
-        s3.deleteObjects(params, (err, data) => {
-          if (err) {
-            console.log(err);
-          } else {
-            // Deleted blog avatar - now create a new one
-            blogAvatar(req, res, err => {
-              if (err) {
-                console.log(err);
-                errors.uploadfail = 'Failed to upload an image';
-                return res.json(errors);
-              }
-              if (req.file == undefined) {
-                console.log(err);
-                errors.selectfail = 'No file selected';
-                return res.json(errors);
-              }
-              blog.avatar.location = req.file.location;
-              blog.avatar.key = req.file.key;
-              blog.avatar.bucket = req.file.bucket;
-              blog.avatar.originalname = req.file.originalname;
-              blog.avatar.mimetype = req.file.mimetype;
-              blog.avatar.size = req.file.size;
-              blog.avatar.fieldName = req.file.metadata.fieldName;
-              blog
-                .save()
-                .then(deletedAvatarBlog =>
-                  res.status(200).json(deletedAvatarBlog)
-                )
-                .catch(err => {
-                  console.log(err);
-                  errors.blognotsaved = 'Blog not saved';
-                  return res.status(404).json(errors);
-                });
-            });
-          }
-        });
-      } else {
-        // Create blog avatar
-        blogAvatar(req, res, err => {
-          if (err) {
-            console.log(err);
-            errors.uploadfail = 'Failed to upload an image';
-            return res.json(errors);
-          }
-          if (req.file == undefined) {
-            console.log(err);
-            errors.selectfail = 'No file selected';
-            return res.json(errors);
-          }
-          blog.avatar.location = req.file.location;
-          blog.avatar.key = req.file.key;
-          blog.avatar.bucket = req.file.bucket;
-          blog.avatar.originalname = req.file.originalname;
-          blog.avatar.mimetype = req.file.mimetype;
-          blog.avatar.size = req.file.size;
-          blog.avatar.fieldName = req.file.metadata.fieldName;
-          blog
-            .save()
-            .then(deletedAvatarBlog => res.status(200).json(deletedAvatarBlog))
-            .catch(err => {
+    Blog.findById(req.params.id)
+      .then(blog => {
+        if (blog.avatar && blog.avatar.key) {
+          // Delete blog avatar
+          const params = {
+            Bucket: blog.avatar.bucket,
+            Delete: {
+              Objects: [{ Key: blog.avatar.key }]
+            }
+          };
+          s3.deleteObjects(params, (err, data) => {
+            if (err) {
               console.log(err);
-              errors.blognotsaved = 'Blog not saved';
-              return res.status(404).json(errors);
-            });
-        });
-      }
-    });
+            } else {
+              // Deleted blog avatar - now create a new one
+              blogAvatar(req, res, err => {
+                if (err) {
+                  console.log(err);
+                  errors.uploadfail = 'Failed to upload an image';
+                  return res.json(errors);
+                }
+                if (req.file == undefined) {
+                  console.log(err);
+                  errors.selectfail = 'No file selected';
+                  return res.json(errors);
+                }
+                blog.avatar.location = req.file.location;
+                blog.avatar.key = req.file.key;
+                blog.avatar.bucket = req.file.bucket;
+                blog.avatar.originalname = req.file.originalname;
+                blog.avatar.mimetype = req.file.mimetype;
+                blog.avatar.size = req.file.size;
+                blog.avatar.fieldName = req.file.metadata.fieldName;
+                blog
+                  .save()
+                  .then(deletedAvatarBlog =>
+                    res.status(200).json(deletedAvatarBlog)
+                  )
+                  .catch(err => {
+                    console.log(err);
+                    errors.blognotsaved = 'Blog not saved';
+                    return res.status(404).json(errors);
+                  });
+              });
+            }
+          });
+        } else {
+          // Create blog avatar
+          blogAvatar(req, res, err => {
+            if (err) {
+              console.log(err);
+              errors.uploadfail = 'Failed to upload an image';
+              return res.json(errors);
+            }
+            if (req.file == undefined) {
+              console.log(err);
+              errors.selectfail = 'No file selected';
+              return res.json(errors);
+            }
+            blog.avatar.location = req.file.location;
+            blog.avatar.key = req.file.key;
+            blog.avatar.bucket = req.file.bucket;
+            blog.avatar.originalname = req.file.originalname;
+            blog.avatar.mimetype = req.file.mimetype;
+            blog.avatar.size = req.file.size;
+            blog.avatar.fieldName = req.file.metadata.fieldName;
+            blog
+              .save()
+              .then(deletedAvatarBlog =>
+                res.status(200).json(deletedAvatarBlog)
+              )
+              .catch(err => {
+                console.log(err);
+                errors.blognotsaved = 'Blog not saved';
+                return res.status(404).json(errors);
+              });
+          });
+        }
+      })
+      .catch(err => {
+        errors.blog = 'Blog not found';
+        console.log(err);
+        return res.status(400).json(errors);
+      });
   }
 );
 
