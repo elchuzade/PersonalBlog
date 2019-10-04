@@ -5,10 +5,13 @@ A blog page built using MERN stack with options of building up a blog post with 
 ## Navigation
 
 Blog - (/blogs) - "All blog posts page".
+
 About Me - (/contacts) - "To show the contact information about you".
 
 Blog Post - (/blog/:id) - "To show the individual blog post by passing the id of the blog".
+
 Register - (/boss/register) - "To register a new user, note: if you are the only user, register yourself then disable the register route from the routes".
+
 Login - (/boss/login) - "To login a user".
 
 Status - (/status) - "To check published and unpublished blog posts and change their status"
