@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Dashboard = ({ editBlog, toggleEdit, onSubmit }) => {
+const BlogDashboard = ({ editBlog, toggleEdit, onSubmit }) => {
   return (
     <div className="dashboard">
       {editBlog ? (
@@ -37,10 +37,10 @@ const Dashboard = ({ editBlog, toggleEdit, onSubmit }) => {
   );
 };
 
-Dashboard.propTypes = {
+BlogDashboard.propTypes = {
   editBlog: PropTypes.bool.isRequired,
   toggleEdit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired
 };
 
-export default Dashboard;
+export default BlogDashboard;

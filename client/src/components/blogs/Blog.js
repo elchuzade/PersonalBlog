@@ -12,11 +12,12 @@ import {
 } from '../../actions/blogActions';
 import { refreshErrors } from '../../actions/commonActions';
 
-import Dashboard from './buildingBlocks/Dashboard';
+import BlogDashboard from './buildingBlocks/BlogDashboard';
 import ShowEditAvatar from './buildingBlocks/ShowEditAvatar';
 import ShowEditDetails from './buildingBlocks/ShowEditDetails';
 import TextElementModal from './buildingBlocks/TextElementModal';
 import ShowEditTextImageElement from './buildingBlocks/ShowEditTextImageElement';
+import TextImageDashboard from './buildingBlocks/TextImageDashboard';
 
 class Blog extends Component {
   constructor(props) {
@@ -189,84 +190,78 @@ class Blog extends Component {
       <div>
         {!spinner && (
           <React.Fragment>
-            <section id="blog">
-              {isAuthenticated && (
-                <section id="dashboard">
-                  <Dashboard
-                    editBlog={this.state.editBlog}
-                    toggleEdit={this.toggleEdit}
-                    onSubmit={this.onSubmit}
-                  />
-                </section>
-              )}
-              <div className="container">
-                {/* AVATAR */}
-                <section id="showEditAvatar">
-                  <ShowEditAvatar
-                    avatar={blog.avatar}
-                    isAuthenticated={isAuthenticated}
-                    editBlog={this.state.editBlog}
-                    onSubmitAvatar={this.onSubmitAvatar}
-                    onChangeAvatar={this.onChangeAvatar}
-                    onDeleteAvatar={this.onDeleteAvatar}
-                    errors={errors}
-                    avatarObject={this.state.avatarObject}
-                  />
-                </section>
-                {/* DETAILS IF ELSE ADMIN*/}
-                <section id="blogDetails">
-                  <ShowEditDetails
-                    onSubmit={this.onSubmit}
-                    title={this.state.title}
-                    onChange={this.onChange}
-                    errors={errors}
-                    intro={this.state.intro}
-                    onChangeQuill={this.onChangeQuill}
-                    createdAt={this.state.createdAt}
-                    isAuthenticated={isAuthenticated}
-                    editBlog={this.state.editBlog}
-                    author={this.state.author}
-                  />
-                </section>
-                <section id="element">
-                  <ShowEditTextImageElement
-                    isAuthenticated={isAuthenticated}
-                    editBlog={this.state.editBlog}
-                    body={this.state.body}
-                    DeleteTextElement={this.DeleteTextElement}
-                    OpenTextElementModal={this.OpenTextElementModal}
-                    onChangeImage={this.onChangeImage}
-                    onDeleteImage={this.onDeleteImage}
-                    imageObject={this.state.imageObject}
-                    errors={errors}
-                    onSubmitImage={this.onSubmitImage}
-                  />
-                </section>
-              </div>
-            </section>
+            {isAuthenticated && (
+              <section id="dashboard">
+                <BlogDashboard
+                  editBlog={this.state.editBlog}
+                  toggleEdit={this.toggleEdit}
+                  onSubmit={this.onSubmit}
+                />
+              </section>
+            )}
+            <div className="container">
+              {/* AVATAR */}
+              <section id="showEditAvatar">
+                <ShowEditAvatar
+                  avatar={blog.avatar}
+                  isAuthenticated={isAuthenticated}
+                  editBlog={this.state.editBlog}
+                  onSubmitAvatar={this.onSubmitAvatar}
+                  onChangeAvatar={this.onChangeAvatar}
+                  onDeleteAvatar={this.onDeleteAvatar}
+                  errors={errors}
+                  avatarObject={this.state.avatarObject}
+                />
+              </section>
+              {/* DETAILS IF ELSE ADMIN*/}
+              <section id="blogDetails">
+                <ShowEditDetails
+                  onSubmit={this.onSubmit}
+                  title={this.state.title}
+                  onChange={this.onChange}
+                  errors={errors}
+                  intro={this.state.intro}
+                  onChangeQuill={this.onChangeQuill}
+                  createdAt={this.state.createdAt}
+                  isAuthenticated={isAuthenticated}
+                  editBlog={this.state.editBlog}
+                  author={this.state.author}
+                />
+              </section>
+              <section id="element">
+                <ShowEditTextImageElement
+                  isAuthenticated={isAuthenticated}
+                  editBlog={this.state.editBlog}
+                  body={this.state.body}
+                  DeleteTextElement={this.DeleteTextElement}
+                  OpenTextElementModal={this.OpenTextElementModal}
+                  onChangeImage={this.onChangeImage}
+                  onDeleteImage={this.onDeleteImage}
+                  imageObject={this.state.imageObject}
+                  errors={errors}
+                  onSubmitImage={this.onSubmitImage}
+                />
+              </section>
+              <section id="textModal">
+                <TextElementModal
+                  modal={this.state.modal}
+                  toggleModal={this.toggleModal}
+                  resetModal={this.resetModal}
+                  submitModal={this.submitModal}
+                  editBlog={this.state.editBlog}
+                  text={this.state.text}
+                  onChangeTextElementQuill={this.onChangeTextElementQuill}
+                />
+              </section>
+              <section id="textImageDashboard">
+                <TextImageDashboard
+                  isAuthenticated={isAuthenticated}
+                  openModal={this.openModal}
+                />
+              </section>
+            </div>
           </React.Fragment>
         )}
-        <TextElementModal
-          modal={this.state.modal}
-          toggleModal={this.toggleModal}
-          resetModal={this.resetModal}
-          submitModal={this.submitModal}
-          editBlog={this.state.editBlog}
-          text={this.state.text}
-          onChangeTextElementQuill={this.onChangeTextElementQuill}
-        />
-        <div className="row my-3">
-          <div className="col-12">
-            <h3 className="text-center">
-              {isAuthenticated && (
-                <button className="btn btn-info mr-3" onClick={this.openModal}>
-                  <i className="fas fa-plus" />
-                </button>
-              )}
-              Text Element
-            </h3>
-          </div>
-        </div>
       </div>
     );
   }
