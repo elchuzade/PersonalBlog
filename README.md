@@ -1,6 +1,6 @@
 # Personal Blog Page
 
-A blog page built using MERN stack with options of building up a blog post with multiple images and rich texts in any order, with options to build a blog post but not post it until the right time comes
+A blog page built using MERN stack with options of building up a blog post with multiple images and rich texts in any order, with options to build a blog post but not post it until the right time comes.
 
 ## Navigation
 

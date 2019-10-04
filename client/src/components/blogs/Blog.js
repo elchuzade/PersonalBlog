@@ -19,6 +19,7 @@ import ReactQuill from 'react-quill';
 
 import Dashboard from './buildingBlocks/Dashboard';
 import ShowEditAvatar from './buildingBlocks/ShowEditAvatar';
+import ShowEditDetails from './buildingBlocks/ShowEditDetails';
 
 class Blog extends Component {
   constructor(props) {
@@ -130,16 +131,12 @@ class Blog extends Component {
     this.setState({ [e.target.name]: e.target.value, errors: errorsUpdate });
   };
   onChangeAvatar = e => {
-    console.log('object');
-    console.log(e.target.files[0]);
     e.preventDefault();
     this.setState({ avatarObject: e.target.files[0] });
     if (this.state.errors && this.state.errors.avatar) {
       let updatedErrors = this.state.errors;
       delete updatedErrors.avatar;
-      this.setState({ errors: updatedErrors }, () => {
-        console.log(this.state.avatarObject);
-      });
+      this.setState({ errors: updatedErrors });
     }
   };
   onSubmitAvatar = e => {
@@ -196,13 +193,15 @@ class Blog extends Component {
         {!spinner && (
           <React.Fragment>
             <section id="blog">
-              <div className="dashboard">
-                <Dashboard
-                  editBlog={this.state.editBlog}
-                  toggleEdit={this.toggleEdit}
-                  onSubmit={this.onSubmit}
-                />
-              </div>
+              {isAuthenticated && (
+                <div className="dashboard">
+                  <Dashboard
+                    editBlog={this.state.editBlog}
+                    toggleEdit={this.toggleEdit}
+                    onSubmit={this.onSubmit}
+                  />
+                </div>
+              )}
               <div className="container">
                 {/* AVATAR */}
                 <div className="row mb-5">
@@ -218,42 +217,22 @@ class Blog extends Component {
                   />
                 </div>
                 {/* DETAILS IF ELSE ADMIN*/}
+                <section className="blogDetails">
+                  <ShowEditDetails
+                    onSubmit={this.onSubmit}
+                    title={this.state.title}
+                    onChange={this.onChange}
+                    errors={errors}
+                    intro={this.state.intro}
+                    onChangeQuill={this.onChangeQuill}
+                    createdAt={this.state.createdAt}
+                    isAuthenticated={isAuthenticated}
+                    editBlog={this.state.editBlog}
+                    author={this.state.author}
+                  />
+                </section>
                 {isAuthenticated && this.state.editBlog ? (
                   <div>
-                    <div className="row mb-3">
-                      <form className="w-100" onSubmit={this.onSubmit}>
-                        <div className="col-12 form-group">
-                          <TextInput
-                            value={this.state.title}
-                            onChange={this.onChange}
-                            name="title"
-                            extraClass="text-center"
-                            placeholder="Blog Title"
-                            error={errors.blogName}
-                          />
-                          <small className="text-muted">Blog title</small>
-                        </div>
-                        <div className="col-12 form-group">
-                          <ReactQuill
-                            value={this.state.intro || ''}
-                            onChange={this.onChangeQuill}
-                          />
-                          <small className="text-muted">
-                            Blog introduction
-                          </small>
-                        </div>
-                        <div>
-                          <p className="text-muted">
-                            <i>
-                              <span>Posted on </span>
-                              <Moment format="D MMM YYYY" withTitle>
-                                {this.state.createdAt}
-                              </Moment>
-                            </i>
-                          </p>
-                        </div>
-                      </form>
-                    </div>
                     <div className="col-12">
                       {blog.body.map(element => (
                         <div key={element._id}>
@@ -333,30 +312,6 @@ class Blog extends Component {
                   </div>
                 ) : (
                   <div className="row mb-3">
-                    <div className="col-12 text-center">
-                      <h2 className="mt-3">{this.state.title}</h2>
-                    </div>
-                    <div className="col-12 text-center">
-                      <p className="text-muted mt-3">by {this.state.author}</p>
-                    </div>
-                    <div className="col-12">
-                      <div
-                        className="lead text-center mx-2 mx-md-5"
-                        dangerouslySetInnerHTML={{
-                          __html: this.state.intro
-                        }}
-                      ></div>
-                    </div>
-                    <div className="col-12">
-                      <p className="text-muted mx-2 mx-md-5 mt-2">
-                        <i>
-                          <span>Posted on </span>
-                          <Moment format="D MMM YYYY" withTitle>
-                            {this.state.createdAt}
-                          </Moment>
-                        </i>
-                      </p>
-                    </div>
                     <div className="col-12">
                       {blog.body.map(element => (
                         <div key={element._id}>
