@@ -10,11 +10,9 @@ import {
   deleteTextElement,
   addTextElement
 } from '../../actions/blogActions';
-import Moment from 'react-moment';
 import { refreshErrors } from '../../actions/commonActions';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import FileInputGroup from '../common/FileInputGroup';
-import TextInput from '../common/TextInput';
 import ReactQuill from 'react-quill';
 
 import Dashboard from './buildingBlocks/Dashboard';
@@ -194,17 +192,17 @@ class Blog extends Component {
           <React.Fragment>
             <section id="blog">
               {isAuthenticated && (
-                <div className="dashboard">
+                <section id="dashboard">
                   <Dashboard
                     editBlog={this.state.editBlog}
                     toggleEdit={this.toggleEdit}
                     onSubmit={this.onSubmit}
                   />
-                </div>
+                </section>
               )}
               <div className="container">
                 {/* AVATAR */}
-                <div className="row mb-5">
+                <section id="showEditAvatar">
                   <ShowEditAvatar
                     avatar={blog.avatar}
                     isAuthenticated={isAuthenticated}
@@ -215,9 +213,9 @@ class Blog extends Component {
                     errors={errors}
                     avatarObject={this.state.avatarObject}
                   />
-                </div>
+                </section>
                 {/* DETAILS IF ELSE ADMIN*/}
-                <section className="blogDetails">
+                <section id="blogDetails">
                   <ShowEditDetails
                     onSubmit={this.onSubmit}
                     title={this.state.title}

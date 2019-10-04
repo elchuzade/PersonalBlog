@@ -5,7 +5,7 @@ const Dashboard = ({ editBlog, toggleEdit, onSubmit }) => {
   return (
     <div>
       {editBlog ? (
-        <React.Fragment>
+        <div>
           <button
             className="btn btn-info m-2 py-3 text-white"
             style={{ minWidth: '48px' }}
@@ -21,15 +21,17 @@ const Dashboard = ({ editBlog, toggleEdit, onSubmit }) => {
           >
             <i className="fas fa-save" />
           </button>
-        </React.Fragment>
+        </div>
       ) : (
-        <button
-          className="btn btn-warning m-2 py-3 text-white"
-          style={{ minWidth: '48px' }}
-          onClick={toggleEdit}
-        >
-          <i className="fas fa-pen" />
-        </button>
+        <div>
+          <button
+            className="btn btn-warning m-2 py-3 text-white"
+            style={{ minWidth: '48px' }}
+            onClick={toggleEdit}
+          >
+            <i className="fas fa-pen" />
+          </button>
+        </div>
       )}
     </div>
   );

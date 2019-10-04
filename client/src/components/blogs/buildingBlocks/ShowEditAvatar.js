@@ -13,42 +13,42 @@ const ShowEditAvatar = ({
   onDeleteAvatar
 }) => {
   return (
-    <div className="col-12 text-center">
-      <img
-        src={
-          avatar ? avatar.location : 'https://picsum.photos/1200/300'
-        }
-        alt="avatar"
-        className="img-fluid"
-      />
-      {isAuthenticated && editBlog && (
-        <form onSubmit={onSubmitAvatar}>
-          <FileInputGroup
-            name="blogAvatar"
-            placeholder="Avatar"
-            onChange={onChangeAvatar}
-            sendFile={avatarObject}
-            error={errors.avatar}
-            accept="image/png, image/jpg, image/jpeg"
-          />
-          <small className="text-muted">
-            This image will be shown in all blogs page and landing page
-          </small>
-          <div className="row mt-2 mb-5">
-            <div className="col">
-              <button
-                className="btn btn-danger mx-2"
-                onClick={onDeleteAvatar}
-              >
-                Delete
-              </button>
-              <button className="btn btn-info mx-2" type="submit">
-                Upload
-              </button>
+    <div className="row mt-5">
+      <div className="col-12 text-center">
+        <img
+          src={avatar ? avatar.location : 'https://picsum.photos/1200/300'}
+          alt="avatar"
+          className="img-fluid"
+        />
+        {isAuthenticated && editBlog && (
+          <form onSubmit={onSubmitAvatar}>
+            <FileInputGroup
+              name="blogAvatar"
+              placeholder="Avatar"
+              onChange={onChangeAvatar}
+              sendFile={avatarObject}
+              error={errors.avatar}
+              accept="image/png, image/jpg, image/jpeg"
+            />
+            <small className="text-muted">
+              This image will be shown in all blogs page and landing page
+            </small>
+            <div className="row mt-2 mb-5">
+              <div className="col">
+                <button
+                  className="btn btn-danger mx-2"
+                  onClick={onDeleteAvatar}
+                >
+                  Delete
+                </button>
+                <button className="btn btn-info mx-2" type="submit">
+                  Upload
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
-      )}
+          </form>
+        )}
+      </div>
     </div>
   );
 };
