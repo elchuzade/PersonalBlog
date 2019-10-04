@@ -208,13 +208,12 @@ export const editElementImage = (
 export const addElementImage = (
   imageData,
   config,
-  id,
-  elementId
+  id
 ) => dispatch => {
   dispatch(refreshErrors());
   dispatch(refreshResponse());
   axios
-    .delete(`/api/blogs/image/${id}/${elementId}`, imageData, config)
+    .post(`/api/blogs/image/${id}/`, imageData, config)
     .then(res => {
       dispatch({
         type: GET_BLOG,

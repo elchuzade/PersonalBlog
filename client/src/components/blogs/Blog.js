@@ -201,6 +201,24 @@ class Blog extends Component {
       this.setState({ errors: updatedErrors });
     }
   };
+  // Add new submit image
+  onSubmitNewImage = e => {
+    e.preventDefault();
+    if (this.state.imageObject.name) {
+      const formData = new FormData();
+      formData.append('blogImage', this.state.imageObject);
+      const configData = {
+        headers: {
+          'content-type': 'multipart/form/data'
+        }
+      };
+      this.props.addElementImage(formData, configData, this.state._id);
+    } else {
+      let updatedErrors = this.state.errors;
+      updatedErrors.image = 'Choose image to upload';
+      this.setState({ errors: updatedErrors });
+    }
+  };
 
   render() {
     const { blog, loading } = this.props.blogs;
@@ -283,6 +301,11 @@ class Blog extends Component {
                 <TextImageDashboard
                   isAuthenticated={isAuthenticated}
                   openModal={this.openModal}
+                  onSubmitNewImage={this.onSubmitNewImage}
+                  onChangeImage={this.onChangeImage}
+                  imageObject={this.state.imageObject}
+                  errors={errors}
+                  onDeleteNewImage={this.onDeleteImage}
                 />
               </section>
             </div>
