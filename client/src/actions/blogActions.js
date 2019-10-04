@@ -4,8 +4,7 @@ import {
   refreshErrors,
   refreshResponse,
   getError,
-  getResponse,
-  setLoading
+  getResponse
 } from './commonActions';
 
 export const getBlogs = () => dispatch => {
@@ -162,6 +161,54 @@ export const addTextElement = (blogId, text) => dispatch => {
       dispatch({
         type: GET_BLOG,
         payload: res.data.item
+      });
+    })
+    .catch(err => {
+      dispatch(getError(err.response.data));
+    });
+};
+
+export const deleteElementImage = (id, elementId) => dispatch => {
+  dispatch(refreshErrors());
+  dispatch(refreshResponse());
+  axios
+    .delete(`/api/blogs/image/${id}/${elementId}`)
+    .then(res => {
+      dispatch({
+        type: GET_BLOG,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(getError(err.response.data));
+    });
+};
+
+export const editElementImage = (id, elementId) => dispatch => {
+  dispatch(refreshErrors());
+  dispatch(refreshResponse());
+  axios
+    .delete(`/api/blogs/image/${id}/${elementId}`)
+    .then(res => {
+      dispatch({
+        type: GET_BLOG,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(getError(err.response.data));
+    });
+};
+
+export const addElementImage = (id, elementId) => dispatch => {
+  dispatch(refreshErrors());
+  dispatch(refreshResponse());
+  axios
+    .delete(`/api/blogs/image/${id}/${elementId}`)
+    .then(res => {
+      dispatch({
+        type: GET_BLOG,
+        payload: res.data
       });
     })
     .catch(err => {

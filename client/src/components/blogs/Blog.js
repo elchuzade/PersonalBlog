@@ -8,7 +8,10 @@ import {
   editBlog,
   editTextElement,
   deleteTextElement,
-  addTextElement
+  addTextElement,
+  editElementImage,
+  deleteElementImage,
+  addElementImage
 } from '../../actions/blogActions';
 import { refreshErrors } from '../../actions/commonActions';
 
@@ -165,17 +168,11 @@ class Blog extends Component {
       this.setState({ errors: updatedErrors });
     }
   };
-  onDeleteImage = e => {
+  onDeleteImage = (e, id) => {
     e.preventDefault();
-    if (this.state.imageObject.name) {
-      this.props.deleteImageAvatar(this.state._id, this);
-      this.setState({ avatarObject: {}, avatar: '' });
-    } else {
-      let updatedErrors = this.state.errors;
-      updatedErrors.avatar = 'No image to delete';
-      this.setState({ errors: updatedErrors });
-    }
-  }
+    this.props.deleteElementImage(this.state._id, id);
+    this.setState({ imageObject: {} });
+  };
   // FIX ERRORS LATER
   onChangeImage = e => {
     e.preventDefault();
@@ -183,6 +180,23 @@ class Blog extends Component {
     if (this.state.errors && this.state.errors.image) {
       let updatedErrors = this.state.errors;
       delete updatedErrors.image;
+      this.setState({ errors: updatedErrors });
+    }
+  };
+  onSubmitImage = e => {
+    e.preventDefault();
+    if (this.state.imageObject.name) {
+      const formData = new FormData();
+      formData.append('blogImage', this.state.imageObject);
+      const configData = {
+        headers: {
+          'content-type': 'multipart/form/data'
+        }
+      };
+      this.props.uploadImageElement(formData, configData, this.state._id);
+    } else {
+      let updatedErrors = this.state.errors;
+      updatedErrors.image = 'Choose image to upload';
       this.setState({ errors: updatedErrors });
     }
   };
@@ -289,7 +303,10 @@ Blog.propTypes = {
   editTextElement: PropTypes.func.isRequired,
   deleteTextElement: PropTypes.func.isRequired,
   addTextElement: PropTypes.func.isRequired,
-  refreshErrors: PropTypes.func.isRequired
+  refreshErrors: PropTypes.func.isRequired,
+  editElementImage: PropTypes.func.isRequired,
+  deleteElementImage: PropTypes.func.isRequired,
+  addElementImage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -308,6 +325,9 @@ export default connect(
     editTextElement,
     deleteTextElement,
     addTextElement,
-    refreshErrors
+    refreshErrors,
+    editElementImage,
+    deleteElementImage,
+    addElementImage
   }
 )(Blog);

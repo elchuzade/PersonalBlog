@@ -74,7 +74,7 @@ const ShowEditTextImageElement = ({
                         <div className="col text-center">
                           <button
                             className="btn btn-danger mx-2"
-                            onClick={onDeleteImage}
+                            onClick={e => onDeleteImage(e, element._id)}
                           >
                             Delete
                           </button>
