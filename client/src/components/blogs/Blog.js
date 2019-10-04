@@ -17,6 +17,8 @@ import FileInputGroup from '../common/FileInputGroup';
 import TextInput from '../common/TextInput';
 import ReactQuill from 'react-quill';
 
+import Dashboard from './buildingBlocks/Dashboard';
+
 class Blog extends Component {
   constructor(props) {
     super(props);
@@ -145,11 +147,7 @@ class Blog extends Component {
           'content-type': 'multipart/form/data'
         }
       };
-      this.props.uploadBlogAvatar(
-        formData,
-        configData,
-        this.props.blogs.blog._id
-      );
+      this.props.uploadBlogAvatar(formData, configData, this.state._id);
     } else {
       let updatedErrors = this.state.errors;
       updatedErrors.avatar = 'Choose image to upload';
@@ -194,37 +192,11 @@ class Blog extends Component {
           <React.Fragment>
             <section id="blog">
               <div className="dashboard">
-                {isAuthenticated && (
-                  <React.Fragment>
-                    {this.state.editBlog ? (
-                      <React.Fragment>
-                        <button
-                          className="btn btn-info m-2 py-3 text-white"
-                          style={{ minWidth: '48px' }}
-                          onClick={this.toggleEdit}
-                        >
-                          <i className="fas fa-eye" />
-                        </button>
-                        <br />
-                        <button
-                          className="btn btn-success m-2 py-3 text-white"
-                          style={{ minWidth: '48px' }}
-                          onClick={this.onSubmit}
-                        >
-                          <i className="fas fa-save" />
-                        </button>
-                      </React.Fragment>
-                    ) : (
-                      <button
-                        className="btn btn-warning m-2 py-3 text-white"
-                        style={{ minWidth: '48px' }}
-                        onClick={this.toggleEdit}
-                      >
-                        <i className="fas fa-pen" />
-                      </button>
-                    )}
-                  </React.Fragment>
-                )}
+                <Dashboard
+                  editBlog={this.state.editBlog}
+                  toggleEdit={this.toggleEdit}
+                  onSubmit={this.onSubmit}
+                />
               </div>
               <div className="container">
                 {/* AVATAR */}
