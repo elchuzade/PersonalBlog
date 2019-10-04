@@ -18,6 +18,7 @@ import TextInput from '../common/TextInput';
 import ReactQuill from 'react-quill';
 
 import Dashboard from './buildingBlocks/Dashboard';
+import ShowEditAvatar from './buildingBlocks/ShowEditAvatar';
 
 class Blog extends Component {
   constructor(props) {
@@ -129,12 +130,16 @@ class Blog extends Component {
     this.setState({ [e.target.name]: e.target.value, errors: errorsUpdate });
   };
   onChangeAvatar = e => {
+    console.log('object');
+    console.log(e.target.files[0]);
     e.preventDefault();
     this.setState({ avatarObject: e.target.files[0] });
     if (this.state.errors && this.state.errors.avatar) {
       let updatedErrors = this.state.errors;
       delete updatedErrors.avatar;
-      this.setState({ errors: updatedErrors });
+      this.setState({ errors: updatedErrors }, () => {
+        console.log(this.state.avatarObject);
+      });
     }
   };
   onSubmitAvatar = e => {
@@ -157,7 +162,7 @@ class Blog extends Component {
   onDeleteAvatar = e => {
     e.preventDefault();
     if (this.state.avatarObject.name || this.props.blogs.blog.avatar) {
-      this.props.deleteBlogAvatar(this.props.blogs.blog._id);
+      this.props.deleteBlogAvatar(this.state._id);
       this.setState({ avatarObject: {}, avatar: '' });
     } else {
       let updatedErrors = this.state.errors;
@@ -201,46 +206,16 @@ class Blog extends Component {
               <div className="container">
                 {/* AVATAR */}
                 <div className="row mb-5">
-                  <div className="col-12 text-center">
-                    <img
-                      src={
-                        blog.avatar
-                          ? blog.avatar.location
-                          : 'https://picsum.photos/1200/300'
-                      }
-                      alt="avatar"
-                      className="img-fluid"
-                    />
-                    {isAuthenticated && this.state.editBlog && (
-                      <form onSubmit={this.onSubmitAvatar}>
-                        <FileInputGroup
-                          name="blogAvatar"
-                          placeholder="Avatar"
-                          onChange={this.onChangeAvatar}
-                          sendFile={this.state.avatarObject}
-                          error={errors.avatar}
-                          accept="image/png, image/jpg, image/jpeg"
-                        />
-                        <small className="text-muted">
-                          This image will be shown in all blogs page and landing
-                          page
-                        </small>
-                        <div className="row mt-2 mb-5">
-                          <div className="col">
-                            <button
-                              className="btn btn-danger mx-2"
-                              onClick={this.onDeleteAvatar}
-                            >
-                              Delete
-                            </button>
-                            <button className="btn btn-info mx-2" type="submit">
-                              Upload
-                            </button>
-                          </div>
-                        </div>
-                      </form>
-                    )}
-                  </div>
+                  <ShowEditAvatar
+                    avatar={blog.avatar}
+                    isAuthenticated={isAuthenticated}
+                    editBlog={this.state.editBlog}
+                    onSubmitAvatar={this.onSubmitAvatar}
+                    onChangeAvatar={this.onChangeAvatar}
+                    onDeleteAvatar={this.onDeleteAvatar}
+                    errors={errors}
+                    avatarObject={this.state.avatarObject}
+                  />
                 </div>
                 {/* DETAILS IF ELSE ADMIN*/}
                 {isAuthenticated && this.state.editBlog ? (
