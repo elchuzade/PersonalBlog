@@ -165,6 +165,17 @@ class Blog extends Component {
       this.setState({ errors: updatedErrors });
     }
   };
+  onDeleteImage = e => {
+    e.preventDefault();
+    if (this.state.imageObject.name) {
+      this.props.deleteImageAvatar(this.state._id, this);
+      this.setState({ avatarObject: {}, avatar: '' });
+    } else {
+      let updatedErrors = this.state.errors;
+      updatedErrors.avatar = 'No image to delete';
+      this.setState({ errors: updatedErrors });
+    }
+  }
   // FIX ERRORS LATER
   onChangeImage = e => {
     e.preventDefault();
