@@ -61,7 +61,7 @@ const ShowEditTextImageElement = ({
                       alt="image"
                       className="img-fluid"
                     />
-                    <form onSubmit={onSubmitImage}>
+                    <form onSubmit={e => onSubmitImage(e, element._id)}>
                       <FileInputGroup
                         name="blogImage"
                         placeholder="Image"

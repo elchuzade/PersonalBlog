@@ -89,11 +89,11 @@ export const editBlog = (id, blog) => dispatch => {
 };
 
 export const uploadBlogAvatar = (imageData, config, id) => dispatch => {
+  dispatch(refreshErrors());
+  dispatch(refreshResponse());
   axios
     .post(`/api/blogs/avatar/${id}`, imageData, config)
     .then(res => {
-      dispatch(refreshErrors());
-      dispatch(refreshResponse());
       dispatch({
         type: GET_BLOG,
         payload: res.data
@@ -184,11 +184,16 @@ export const deleteElementImage = (id, elementId) => dispatch => {
     });
 };
 
-export const editElementImage = (id, elementId) => dispatch => {
+export const editElementImage = (
+  imageData,
+  config,
+  id,
+  elementId
+) => dispatch => {
   dispatch(refreshErrors());
   dispatch(refreshResponse());
   axios
-    .delete(`/api/blogs/image/${id}/${elementId}`)
+    .put(`/api/blogs/image/${id}/${elementId}`, imageData, config)
     .then(res => {
       dispatch({
         type: GET_BLOG,
@@ -200,11 +205,16 @@ export const editElementImage = (id, elementId) => dispatch => {
     });
 };
 
-export const addElementImage = (id, elementId) => dispatch => {
+export const addElementImage = (
+  imageData,
+  config,
+  id,
+  elementId
+) => dispatch => {
   dispatch(refreshErrors());
   dispatch(refreshResponse());
   axios
-    .delete(`/api/blogs/image/${id}/${elementId}`)
+    .delete(`/api/blogs/image/${id}/${elementId}`, imageData, config)
     .then(res => {
       dispatch({
         type: GET_BLOG,

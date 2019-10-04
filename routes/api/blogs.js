@@ -541,6 +541,7 @@ router.put(
                   newImage.mimetype = req.file.mimetype;
                   newImage.size = req.file.size;
                   newImage.fieldName = req.file.metadata.fieldName;
+                  blog.body[i].image = newImage;
                   blog
                     .save()
                     .then(blog => res.status(200).json(blog))

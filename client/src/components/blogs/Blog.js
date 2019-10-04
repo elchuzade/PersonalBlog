@@ -183,7 +183,8 @@ class Blog extends Component {
       this.setState({ errors: updatedErrors });
     }
   };
-  onSubmitImage = e => {
+  // Edit submit image
+  onSubmitImage = (e, id) => {
     e.preventDefault();
     if (this.state.imageObject.name) {
       const formData = new FormData();
@@ -193,7 +194,7 @@ class Blog extends Component {
           'content-type': 'multipart/form/data'
         }
       };
-      this.props.uploadImageElement(formData, configData, this.state._id);
+      this.props.editElementImage(formData, configData, this.state._id, id);
     } else {
       let updatedErrors = this.state.errors;
       updatedErrors.image = 'Choose image to upload';
