@@ -11,13 +11,12 @@ import {
   addTextElement
 } from '../../actions/blogActions';
 import { refreshErrors } from '../../actions/commonActions';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import FileInputGroup from '../common/FileInputGroup';
-import ReactQuill from 'react-quill';
 
 import Dashboard from './buildingBlocks/Dashboard';
 import ShowEditAvatar from './buildingBlocks/ShowEditAvatar';
 import ShowEditDetails from './buildingBlocks/ShowEditDetails';
+import TextElementModal from './buildingBlocks/TextElementModal';
 
 class Blog extends Component {
   constructor(props) {
@@ -339,44 +338,15 @@ class Blog extends Component {
             </section>
           </React.Fragment>
         )}
-        <Modal
-          isOpen={this.state.modal}
-          toggle={this.toggleModal}
-          size="lg"
-          onClosed={this.resetModal}
-        >
-          <form onSubmit={this.submitModal}>
-            <ModalHeader className="text-info">
-              {this.state.edit ? <span>Edit</span> : <span>Add</span>} Element
-            </ModalHeader>
-            <ModalBody>
-              <div className="container">
-                <div className="row">
-                  <div className="col-12">
-                    <div className="form-group">
-                      <ReactQuill
-                        value={this.state.text || ''}
-                        onChange={this.onChangeTextElementQuill}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ModalBody>
-            <ModalFooter>
-              <button className="btn mainButton" type="submit">
-                Submit
-              </button>
-              <button
-                className="btn btn-danger"
-                type="button"
-                onClick={this.toggleModal}
-              >
-                Cancel
-              </button>
-            </ModalFooter>
-          </form>
-        </Modal>
+        <TextElementModal
+          modal={this.state.modal}
+          toggleModal={this.toggleModal}
+          resetModal={this.resetModal}
+          submitModal={this.submitModal}
+          editBlog={this.state.editBlog}
+          text={this.state.text}
+          onChangeTextElementQuill={this.onChangeTextElementQuill}
+        />
         <div className="row my-3">
           <div className="col-12">
             <h3 className="text-center">
