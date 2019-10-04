@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Dashboard = ({ editBlog, toggleEdit, onSubmit }) => {
   return (
-    <div>
+    <div className="dashboard">
       {editBlog ? (
         <div>
           <button

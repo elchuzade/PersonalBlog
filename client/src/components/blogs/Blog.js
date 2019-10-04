@@ -11,12 +11,12 @@ import {
   addTextElement
 } from '../../actions/blogActions';
 import { refreshErrors } from '../../actions/commonActions';
-import FileInputGroup from '../common/FileInputGroup';
 
 import Dashboard from './buildingBlocks/Dashboard';
 import ShowEditAvatar from './buildingBlocks/ShowEditAvatar';
 import ShowEditDetails from './buildingBlocks/ShowEditDetails';
 import TextElementModal from './buildingBlocks/TextElementModal';
+import ShowEditTextImageElement from './buildingBlocks/ShowEditTextImageElement';
 
 class Blog extends Component {
   constructor(props) {
@@ -228,112 +228,20 @@ class Blog extends Component {
                     author={this.state.author}
                   />
                 </section>
-                {isAuthenticated && this.state.editBlog ? (
-                  <div>
-                    <div className="col-12">
-                      {blog.body.map(element => (
-                        <div key={element._id}>
-                          {element.type == 'text' ? (
-                            <div>
-                              <div
-                                className="lead text-center mx-2 mx-md-5"
-                                dangerouslySetInnerHTML={{
-                                  __html: element.text
-                                }}
-                              ></div>
-                              <div className="row mt-2 mb-5">
-                                <div className="col">
-                                  <button
-                                    className="btn btn-danger mx-2"
-                                    onClick={(e, id = element._id) =>
-                                      this.DeleteTextElement(e, id)
-                                    }
-                                  >
-                                    Delete
-                                  </button>
-                                  <button
-                                    className="btn btn-info mx-2"
-                                    onClick={(
-                                      e,
-                                      id = element._id,
-                                      text = element.text
-                                    ) => this.OpenTextElementModal(e, id, text)}
-                                  >
-                                    Update
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          ) : (
-                            <div>
-                              <img
-                                src={
-                                  element.image.location
-                                    ? element.image.location
-                                    : 'https://picsum.photos/1200/300'
-                                }
-                                alt="image"
-                                className="img-fluid"
-                              />
-                              <form onSubmit={this.onSubmitImage}>
-                                <FileInputGroup
-                                  name="blogImage"
-                                  placeholder="Image"
-                                  onChange={this.onChangeImage}
-                                  sendFile={this.state.imageObject}
-                                  error={errors.image}
-                                  accept="image/png, image/jpg, image/jpeg"
-                                />
-                                <div className="row mt-2 mb-5">
-                                  <div className="col">
-                                    <button
-                                      className="btn btn-danger mx-2"
-                                      onClick={this.onDeleteImage}
-                                    >
-                                      Delete
-                                    </button>
-                                    <button
-                                      className="btn btn-info mx-2"
-                                      type="submit"
-                                    >
-                                      Upload
-                                    </button>
-                                  </div>
-                                </div>
-                              </form>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="row mb-3">
-                    <div className="col-12">
-                      {blog.body.map(element => (
-                        <div key={element._id}>
-                          {element.type == 'text' ? (
-                            <div>
-                              <div
-                                className="lead text-center mx-2 mx-md-5"
-                                dangerouslySetInnerHTML={{
-                                  __html: element.text
-                                }}
-                              ></div>
-                            </div>
-                          ) : (
-                            <div>
-                              <img
-                                src={element.image.location}
-                                alt="image icon"
-                              />
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <section id="element">
+                  <ShowEditTextImageElement
+                    isAuthenticated={isAuthenticated}
+                    editBlog={this.state.editBlog}
+                    body={this.state.body}
+                    DeleteTextElement={this.DeleteTextElement}
+                    OpenTextElementModal={this.OpenTextElementModal}
+                    onChangeImage={this.onChangeImage}
+                    onDeleteImage={this.onDeleteImage}
+                    imageObject={this.state.imageObject}
+                    errors={errors}
+                    onSubmitImage={this.onSubmitImage}
+                  />
+                </section>
               </div>
             </section>
           </React.Fragment>
