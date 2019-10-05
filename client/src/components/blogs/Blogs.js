@@ -126,7 +126,7 @@ class Blogs extends Component {
               <React.Fragment>
                 <div className="row">
                   {blogs.map(blog => (
-                    <div key={blog._id} className="col-12 col-md-6 mb-3">
+                    <div key={blog._id} className="col-12 col-lg-6 mb-3">
                       <BlogCard
                         key={blog._id}
                         blog={blog}

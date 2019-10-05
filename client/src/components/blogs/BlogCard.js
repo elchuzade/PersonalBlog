@@ -40,7 +40,7 @@ class BlogCard extends Component {
               </Link>
             </h5>
             <div
-              className="card-text mx-2 mx-md-5"
+              className="card-text"
               dangerouslySetInnerHTML={{
                 __html: blog.intro
               }}

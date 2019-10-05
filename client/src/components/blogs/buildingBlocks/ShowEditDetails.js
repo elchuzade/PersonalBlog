@@ -4,6 +4,12 @@ import TextInput from '../../common/TextInput';
 import ReactQuill from 'react-quill';
 import Moment from 'react-moment';
 
+import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.bubble.css';
+
+import modules from '../../common/exports/QuillModules';
+import formats from '../../common/exports/QuillFormats';
+
 const ShowEditDetails = ({
   onSubmit,
   title,
@@ -34,7 +40,13 @@ const ShowEditDetails = ({
                 <small className="text-muted">Blog title</small>
               </div>
               <div className="form-group">
-                <ReactQuill value={intro || ''} onChange={onChangeQuill} />
+                <ReactQuill
+                  value={intro || ''}
+                  onChange={onChangeQuill}
+                  theme="snow"
+                  modules={modules}
+                  formats={formats}
+                />
                 <small className="text-muted">Blog introduction</small>
               </div>
               <div className="form-group">
@@ -79,7 +91,7 @@ ShowEditDetails.propTypes = {
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  intro: PropTypes.string.isRequired,
+  intro: PropTypes.string,
   onChangeQuill: PropTypes.func.isRequired,
   createdAt: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,

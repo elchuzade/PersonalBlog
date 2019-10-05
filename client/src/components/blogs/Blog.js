@@ -99,11 +99,11 @@ class Blog extends Component {
     e.preventDefault();
     this.props.deleteTextElement(this.state._id, elementId);
   };
-  onChangeQuill = value => {
-    this.setState({ intro: value });
+  onChangeQuill = (content, delta, source, value) => {
+    this.setState({ intro: value.getHTML() });
   };
-  onChangeTextElementQuill = value => {
-    this.setState({ text: value });
+  onChangeTextElementQuill = (content, delta, source, value) => {
+    this.setState({ text: value.getHTML() });
   };
   OpenTextElementModal = (e, id, text) => {
     e.preventDefault();
@@ -297,7 +297,7 @@ class Blog extends Component {
                   onChangeTextElementQuill={this.onChangeTextElementQuill}
                 />
               </section>
-              {isAuthenticated && (
+              {isAuthenticated && !this.state.editBlog && (
                 <section id="textImageDashboard">
                   <TextImageDashboard
                     openModal={this.openModal}

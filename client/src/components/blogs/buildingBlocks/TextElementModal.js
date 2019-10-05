@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import ReactQuill from 'react-quill';
 
+import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.bubble.css';
+
+import modules from '../../common/exports/QuillModules';
+import formats from '../../common/exports/QuillFormats';
+
 const TextElementModal = ({
   modal,
   toggleModal,
@@ -31,6 +37,9 @@ const TextElementModal = ({
                   <ReactQuill
                     value={text || ''}
                     onChange={onChangeTextElementQuill}
+                    theme="snow"
+                    modules={modules}
+                    formats={formats}
                   />
                 </div>
               </div>
@@ -60,7 +69,7 @@ TextElementModal.propTypes = {
   resetModal: PropTypes.func.isRequired,
   submitModal: PropTypes.func.isRequired,
   editBlog: PropTypes.bool.isRequired,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   onChangeTextElementQuill: PropTypes.func.isRequired
 };
 
