@@ -8,6 +8,10 @@ body {
   background: rgba(23, 162, 184, 0.2);
 }
 
+.dashboardBtn {
+  min-width: 48px;
+}
+
 .blogCardDiv {
   height: 200px;
 }

@@ -21,12 +21,14 @@ import ShowEditDetails from './buildingBlocks/ShowEditDetails';
 import TextElementModal from './buildingBlocks/TextElementModal';
 import ShowEditTextImageElement from './buildingBlocks/ShowEditTextImageElement';
 import TextImageDashboard from './buildingBlocks/TextImageDashboard';
+import ImageElementModal from './buildingBlocks/ImageElementModal';
 
 class Blog extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
+      imageModal: false,
       title: '',
       intro: '',
       body: [],
@@ -65,13 +67,13 @@ class Blog extends Component {
       });
     }
   }
-  openModal = e => {
+  openTextModal = e => {
     e.preventDefault();
     if (!this.state.modal) {
       this.setState({ modal: true });
     }
   };
-  submitModal = e => {
+  submitTextModal = e => {
     e.preventDefault();
     let obj = {};
     obj.text = this.state.text;
@@ -80,19 +82,38 @@ class Blog extends Component {
     } else {
       this.props.addTextElement(this.state._id, obj);
     }
-    this.resetModal();
+    this.resetTextModal();
   };
-  resetModal = () => {
+  resetTextModal = () => {
     this.setState({
       modal: false,
       text: ''
     });
   };
-  toggleModal = e => {
+  toggleTextModal = e => {
     e.preventDefault();
     if (this.state.modal) {
       this.props.refreshErrors();
       this.setState({ modal: false });
+    }
+  };
+  openImageModal = e => {
+    e.preventDefault();
+    if (!this.state.imageModal) {
+      this.setState({ imageModal: true });
+    }
+  };
+  resetImageModal = () => {
+    this.setState({
+      imageModal: false,
+      imageObject: {}
+    });
+  };
+  toggleImageModal = e => {
+    e.preventDefault();
+    if (this.state.imageModal) {
+      this.props.refreshErrors();
+      this.setState({ imageModal: false });
     }
   };
   DeleteTextElement = (e, elementId) => {
@@ -218,6 +239,7 @@ class Blog extends Component {
       updatedErrors.image = 'Choose image to upload';
       this.setState({ errors: updatedErrors });
     }
+    this.resetImageModal();
   };
 
   render() {
@@ -240,6 +262,8 @@ class Blog extends Component {
                   editBlog={this.state.editBlog}
                   toggleEdit={this.toggleEdit}
                   onSubmit={this.onSubmit}
+                  openTextModal={this.openTextModal}
+                  openImageModal={this.openImageModal}
                 />
               </section>
             )}
@@ -289,26 +313,25 @@ class Blog extends Component {
               <section id="textModal">
                 <TextElementModal
                   modal={this.state.modal}
-                  toggleModal={this.toggleModal}
-                  resetModal={this.resetModal}
-                  submitModal={this.submitModal}
+                  toggleModal={this.toggleTextModal}
+                  resetModal={this.resetTextModal}
+                  submitModal={this.submitTextModal}
                   editBlog={this.state.editBlog}
                   text={this.state.text}
                   onChangeTextElementQuill={this.onChangeTextElementQuill}
                 />
               </section>
-              {isAuthenticated && !this.state.editBlog && (
-                <section id="textImageDashboard">
-                  <TextImageDashboard
-                    openModal={this.openModal}
-                    onSubmitNewImage={this.onSubmitNewImage}
-                    onChangeImage={this.onChangeImage}
-                    imageObject={this.state.imageObject}
-                    errors={errors}
-                    onDeleteNewImage={this.onDeleteImage}
-                  />
-                </section>
-              )}
+              <section id="imageModal">
+                <ImageElementModal
+                  modal={this.state.imageModal}
+                  toggleModal={this.toggleImageModal}
+                  resetModal={this.resetImageModal}
+                  submitModal={this.onSubmitNewImage}
+                  onChangeImage={this.onChangeImage}
+                  imageObject={this.state.imageObject}
+                  errors={errors}
+                />
+              </section>
             </div>
           </React.Fragment>
         )}
