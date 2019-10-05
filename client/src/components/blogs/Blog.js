@@ -297,17 +297,18 @@ class Blog extends Component {
                   onChangeTextElementQuill={this.onChangeTextElementQuill}
                 />
               </section>
-              <section id="textImageDashboard">
-                <TextImageDashboard
-                  isAuthenticated={isAuthenticated}
-                  openModal={this.openModal}
-                  onSubmitNewImage={this.onSubmitNewImage}
-                  onChangeImage={this.onChangeImage}
-                  imageObject={this.state.imageObject}
-                  errors={errors}
-                  onDeleteNewImage={this.onDeleteImage}
-                />
-              </section>
+              {isAuthenticated && (
+                <section id="textImageDashboard">
+                  <TextImageDashboard
+                    openModal={this.openModal}
+                    onSubmitNewImage={this.onSubmitNewImage}
+                    onChangeImage={this.onChangeImage}
+                    imageObject={this.state.imageObject}
+                    errors={errors}
+                    onDeleteNewImage={this.onDeleteImage}
+                  />
+                </section>
+              )}
             </div>
           </React.Fragment>
         )}

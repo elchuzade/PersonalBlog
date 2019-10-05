@@ -7,6 +7,28 @@ body {
   background: rgba(23, 162, 184, 0.2);
 }
 
+.blogCardDiv {
+  height: 200px;
+}
+
+.card-body {
+  height: 200px;
+}
+
+.card-body {
+  background: white;
+}
+
+.blogCardTitle {
+  color: black;
+  text-decoration: none;
+}
+
+.blogCardTitle:hover {
+  color: black;
+  text-decoration: none;
+}
+
 .dashboard {
   position: fixed;
 }

@@ -32,8 +32,7 @@ const BlogSchema = new Schema(
       required: true
     },
     intro: {
-      type: String,
-      required: true
+      type: String
     },
     author: {
       type: String,
