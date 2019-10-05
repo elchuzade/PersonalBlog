@@ -20,7 +20,7 @@ const ShowEditTextImageElement = ({
         <div className="col-12">
           {isAuthenticated &&
             body.map(element => (
-              <div key={element._id} className="mt-3">
+              <div key={element._id} className="mt-3 border">
                 {element.type == 'text' ? (
                   <div>
                     <div
@@ -51,7 +51,7 @@ const ShowEditTextImageElement = ({
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center">
+                  <div className="text-center border">
                     <img
                       src={
                         element.image.location
