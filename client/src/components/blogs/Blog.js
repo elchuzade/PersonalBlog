@@ -64,7 +64,8 @@ class Blog extends Component {
         _id: blog._id,
         author: blog.author,
         createdAt: blog.createdAt,
-        editBlog: false
+        editBlog: false,
+        avatarCopyright: blog.avatar && blog.avatar.copyright
       });
     }
   }
@@ -320,6 +321,8 @@ class Blog extends Component {
                   imageObject={this.state.imageObject}
                   errors={errors}
                   onSubmitImage={this.onSubmitImage}
+                  copyright={this.state.imageCopyright}
+                  onChange={this.onChange}
                 />
               </section>
               <section id="textModal">
@@ -342,6 +345,8 @@ class Blog extends Component {
                   onChangeImage={this.onChangeImage}
                   imageObject={this.state.imageObject}
                   errors={errors}
+                  copyright={this.state.imageCopyright}
+                  onChange={this.onChange}
                 />
               </section>
             </div>

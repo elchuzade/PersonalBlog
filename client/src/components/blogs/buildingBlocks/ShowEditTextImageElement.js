@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FileInputGroup from '../../common/FileInputGroup';
+import TextInput from '../../common/TextInput';
 
 const ShowEditTextImageElement = ({
   isAuthenticated,
@@ -12,7 +13,9 @@ const ShowEditTextImageElement = ({
   onSubmitImage,
   imageObject,
   onDeleteImage,
-  errors
+  errors,
+  copyright,
+  onChange
 }) => {
   return (
     <div className="row mx-0 mx-lg-5 px-lg-5">
@@ -70,6 +73,13 @@ const ShowEditTextImageElement = ({
                         error={errors.image}
                         accept="image/png, image/jpg, image/jpeg"
                       />
+                      <TextInput
+                        value={copyright}
+                        onChange={onChange}
+                        name="imageCopyright"
+                        extraClass="text-center"
+                        placeholder="Image Copyright"
+                      />
                       <div className="row mt-2 mb-5">
                         <div className="col text-center">
                           <button
@@ -100,11 +110,19 @@ const ShowEditTextImageElement = ({
                   }}
                 ></div>
               ) : (
-                <img
-                  src={element.image.location}
-                  alt="image icon"
-                  className="img-fluid text-center"
-                />
+                <div className="text-center my-5">
+                  <img
+                    src={element.image.location}
+                    alt="image icon"
+                    className="img-fluid"
+                  />
+                  <br />
+                  <div className="copyrightLink">
+                    <a target="__blank" href={element.image.copyright}>
+                      Copyright
+                    </a>
+                  </div>
+                </div>
               )}
             </div>
           ))}
@@ -124,7 +142,9 @@ ShowEditTextImageElement.propTypes = {
   onSubmitImage: PropTypes.func.isRequired,
   imageObject: PropTypes.object.isRequired,
   onDeleteImage: PropTypes.func.isRequired,
-  errors: PropTypes.object
+  errors: PropTypes.object,
+  copyright: PropTypes.string,
+  onChange: PropTypes.func.isRequired
 };
 
 export default ShowEditTextImageElement;

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FileInputGroup from '../../common/FileInputGroup';
 import TextInput from '../../common/TextInput';
+import classnames from 'classnames';
 
 const ShowEditAvatar = ({
   avatar,
@@ -23,6 +24,16 @@ const ShowEditAvatar = ({
           alt="avatar"
           className="img-fluid"
         />
+        <br />
+        <div
+          className={classnames('copyrightLink', {
+            'd-none': editBlog
+          })}
+        >
+          <a target="__blank" href={copyright}>
+            Copyright
+          </a>
+        </div>
         {isAuthenticated && editBlog && (
           <form onSubmit={onSubmitAvatar}>
             <FileInputGroup

@@ -2,10 +2,34 @@ body {
   padding-top: 60px;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  color: lightgrey;
+  text-decoration: none;
+}
+
 #signUpLink:hover,
 #signInLink:hover {
   color: black !important;
   background: rgba(23, 162, 184, 0.2);
+}
+
+.copyrightLink {
+  border-radius: 20px;
+  background: rgb(20,20,20);
+  margin: -15px 0 0 0;
+  padding: 3px 20px;
+  z-index: 1;
+  width: 120px;
+  height: 30px;
+  color: grey;
+  position: absolute;
+  font: 20px;
+  left: 50%;
+  transform: translate(-50%);
 }
 
 .dashboardBtn {

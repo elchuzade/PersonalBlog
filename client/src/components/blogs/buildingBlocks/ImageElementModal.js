@@ -2,8 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import FileInputGroup from '../../common/FileInputGroup';
+import TextInput from '../../common/TextInput';
 
-const ImageElementModal = ({ modal, toggleModal, resetModal, submitModal, onChangeImage, imageObject, errors }) => {
+const ImageElementModal = ({
+  modal,
+  toggleModal,
+  resetModal,
+  submitModal,
+  onChangeImage,
+  imageObject,
+  errors,
+  copyright,
+  onChange
+}) => {
   return (
     <Modal isOpen={modal} toggle={toggleModal} size="lg" onClosed={resetModal}>
       <form onSubmit={submitModal}>
@@ -19,6 +30,13 @@ const ImageElementModal = ({ modal, toggleModal, resetModal, submitModal, onChan
                   sendFile={imageObject}
                   error={errors.image}
                   accept="image/png, image/jpg, image/jpeg"
+                />
+                <TextInput
+                  value={copyright}
+                  onChange={onChange}
+                  name="imageCopyright"
+                  extraClass="text-center"
+                  placeholder="Image Copyright"
                 />
               </div>
             </div>
@@ -48,7 +66,9 @@ ImageElementModal.propTypes = {
   submitModal: PropTypes.func.isRequired,
   onChangeImage: PropTypes.func.isRequired,
   imageObject: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  copyright: PropTypes.string,
+  onChange: PropTypes.func.isRequired
 };
 
 export default ImageElementModal;
