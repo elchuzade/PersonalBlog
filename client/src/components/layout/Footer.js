@@ -29,7 +29,7 @@ class Footer extends Component {
               <div className="row">
                 <div className="col-12 mb-1">
                   <h4>
-                    Kamran Elchuzade <span className="h6">Personal Blog</span>
+                    <span className="h6">Personal Blog</span>
                   </h4>
                 </div>
                 <div className="col-12 mb-2">

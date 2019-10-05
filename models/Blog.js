@@ -5,6 +5,9 @@ const Schema = mongoose.Schema;
 const BlogSchema = new Schema(
   {
     avatar: {
+      copyright: {
+        type: String
+      },
       location: {
         type: String
       },
@@ -49,6 +52,9 @@ const BlogSchema = new Schema(
           required: true
         },
         image: {
+          copyright: {
+            type: String
+          },
           location: {
             type: String
           },
