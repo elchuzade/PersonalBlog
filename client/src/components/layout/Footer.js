@@ -36,10 +36,14 @@ class Footer extends Component {
                 Contacts
               </Link>
               <span className="mx-2 align-middle">
-                <i class="fab fa-github fa-2x"></i>
+                <a href="https://github.com/elchuzade">
+                  <i class="fab fa-github fa-2x"></i>
+                </a>
               </span>
               <span className="mx-2">
-                <i class="fab fa-linkedin fa-2x align-middle"></i>
+                <a href="https://linkedin.com/in/elchuzade">
+                  <i class="fab fa-linkedin fa-2x align-middle"></i>
+                </a>
               </span>
             </div>
           </div>
