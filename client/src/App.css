@@ -1,6 +1,7 @@
 body {
   padding-top: 60px;
 }
+
 #signUpLink:hover,
 #signInLink:hover {
   color: black !important;

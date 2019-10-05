@@ -251,10 +251,16 @@ router.delete(
         let deleteObjects = [];
         let deleteBucket = '';
         if (blog.avatar && blog.avatar.key) {
-          if (blog.avatar && blog.avatar.key) {
+          deleteBucket = blog.avatar.bucket;
+          deleteObjects.push({ Key: blog.avatar.key });
+        }
+        for (let i = 0; i < blog.body.length; i++) {
+          if (blog.body[i].type == 'image') {
             deleteBucket = blog.avatar.bucket;
-            deleteObjects.push({ Key: blog.avatar.key });
+            deleteObjects.push({ Key: blog.body[i].image.key });
           }
+        }
+        if (deleteObjects.length > 0) {
           const params = {
             Bucket: deleteBucket,
             Delete: {
