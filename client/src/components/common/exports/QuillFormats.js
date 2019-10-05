@@ -4,6 +4,7 @@ const formats = [
   'bold',
   'italic',
   'underline',
+  'link',
   'list',
   'bullet',
   'align',

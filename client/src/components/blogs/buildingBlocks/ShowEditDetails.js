@@ -65,21 +65,24 @@ const ShowEditDetails = ({
       ) : (
         <div className="col-12 text-center">
           <h2 className="mt-3">{title}</h2>
-          <p className="text-muted mt-3">by {author}</p>
+          <p className="text-muted mx-2 mx-md-5 mt-3">
+            <i>
+              <span>posted on </span>
+              <Moment format="D MMM YYYY" withTitle>
+                {createdAt}
+              </Moment>
+            </i>
+            <span className="mx-3">|</span>
+            <i>
+              <span>by {author}</span>
+            </i>
+          </p>
           <div
             className="lead mx-2 mx-md-5"
             dangerouslySetInnerHTML={{
               __html: intro
             }}
           ></div>
-          <p className="text-muted mx-2 mx-md-5 mt-2">
-            <i>
-              <span>Posted on </span>
-              <Moment format="D MMM YYYY" withTitle>
-                {createdAt}
-              </Moment>
-            </i>
-          </p>
         </div>
       )}
     </div>

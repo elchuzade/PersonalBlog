@@ -26,7 +26,7 @@ const uploadBlogAvatar = multer({
       cb(null, fullPath);
     }
   }),
-  limits: { fileSize: 2000000 },
+  limits: { fileSize: 20000000 },
   fileFilter: function(req, file, cb) {
     checkFileType(file, cb);
   }
@@ -45,7 +45,7 @@ const uploadBlogImage = multer({
       cb(null, fullPath);
     }
   }),
-  limits: { fileSize: 2000000 },
+  limits: { fileSize: 20000000 },
   fileFilter: function(req, file, cb) {
     checkFileType(file, cb);
   }

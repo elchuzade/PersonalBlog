@@ -15,7 +15,7 @@ const ShowEditTextImageElement = ({
   errors
 }) => {
   return (
-    <div className="row mt-5">
+    <div className="row mt-5 mx-5 px-5">
       {editBlog ? (
         <div className="col-12">
           {isAuthenticated &&
@@ -24,7 +24,7 @@ const ShowEditTextImageElement = ({
                 {element.type == 'text' ? (
                   <div>
                     <div
-                      className="lead text-center mx-2 mx-md-5"
+                      className="lead mx-2 mx-md-5"
                       dangerouslySetInnerHTML={{
                         __html: element.text
                       }}
@@ -90,7 +90,7 @@ const ShowEditTextImageElement = ({
             ))}
         </div>
       ) : (
-        <div className="col-12 text-center">
+        <div className="col-12">
           {body.map(element => (
             <div key={element._id} className="mt-3">
               {element.type == 'text' ? (
