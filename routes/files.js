@@ -31,6 +31,7 @@ const uploadBlogAvatar = multer({
     checkFileType(file, cb);
   }
 });
+
 const uploadBlogImage = multer({
   storage: multerS3({
     s3: s3,

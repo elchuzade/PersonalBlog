@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FileInputGroup from '../../common/FileInputGroup';
+import TextInput from '../../common/TextInput';
 
 const ShowEditAvatar = ({
   avatar,
@@ -10,7 +11,9 @@ const ShowEditAvatar = ({
   onChangeAvatar,
   avatarObject,
   errors,
-  onDeleteAvatar
+  onDeleteAvatar,
+  copyright,
+  onChange
 }) => {
   return (
     <div className="row mt-5">
@@ -30,9 +33,13 @@ const ShowEditAvatar = ({
               error={errors.avatar}
               accept="image/png, image/jpg, image/jpeg"
             />
-            <small className="text-muted">
-              This image will be shown in all blogs page and landing page
-            </small>
+            <TextInput
+              value={copyright}
+              onChange={onChange}
+              name="avatarCopyright"
+              extraClass="text-center"
+              placeholder="Avatar Copyright"
+            />
             <div className="row mt-2 mb-5">
               <div className="col">
                 <button
@@ -61,7 +68,9 @@ ShowEditAvatar.propTypes = {
   onChangeAvatar: PropTypes.func.isRequired,
   avatarObject: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
-  onDeleteAvatar: PropTypes.func.isRequired
+  onDeleteAvatar: PropTypes.func.isRequired,
+  copyright: PropTypes.string,
+  onChange: PropTypes.func.isRequired
 };
 
 export default ShowEditAvatar;

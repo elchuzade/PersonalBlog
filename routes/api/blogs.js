@@ -322,7 +322,7 @@ router.post(
     const errors = {};
     Blog.findById(req.params.id)
       .then(blog => {
-        const params = {};
+        let params = {};
         if (blog.avatar && blog.avatar.key) {
           params = {
             Bucket: blog.avatar.bucket,
@@ -347,7 +347,8 @@ router.post(
             errors.selectfail = 'No file selected';
             return res.json(errors);
           }
-          if (req.file.copyright) blog.avatar.copyright = req.file.copyright;
+          if (req.headers.copyright)
+            blog.avatar.copyright = req.headers.copyright;
           blog.avatar.location = req.file.location;
           blog.avatar.key = req.file.key;
           blog.avatar.bucket = req.file.bucket;
@@ -442,7 +443,7 @@ router.post(
             return res.json(errors);
           }
           let newImage = {};
-          if (req.file.copyright) newImage.copyright = req.file.copyright;
+          if (req.headers.copyright) newImage.copyright = req.headers.copyright;
           newImage.location = req.file.location;
           newImage.key = req.file.key;
           newImage.bucket = req.file.bucket;
@@ -506,8 +507,8 @@ router.put(
                     return res.json(errors);
                   }
                   let newImage = {};
-                  if (req.file.copyright)
-                    newImage.copyright = req.file.copyright;
+                  if (req.headers.copyright)
+                    newImage.copyright = req.headers.copyright;
                   newImage.location = req.file.location;
                   newImage.key = req.file.key;
                   newImage.bucket = req.file.bucket;

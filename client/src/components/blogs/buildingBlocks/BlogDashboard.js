@@ -46,7 +46,7 @@ const BlogDashboard = ({
             className="btn btn-info m-2 py-3 text-white dashboardBtn"
             onClick={openImageModal}
           >
-            <i class="fas fa-image" />
+            <i className="fas fa-image" />
           </button>
         </div>
       )}

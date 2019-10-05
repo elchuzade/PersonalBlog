@@ -20,7 +20,6 @@ import ShowEditAvatar from './buildingBlocks/ShowEditAvatar';
 import ShowEditDetails from './buildingBlocks/ShowEditDetails';
 import TextElementModal from './buildingBlocks/TextElementModal';
 import ShowEditTextImageElement from './buildingBlocks/ShowEditTextImageElement';
-import TextImageDashboard from './buildingBlocks/TextImageDashboard';
 import ImageElementModal from './buildingBlocks/ImageElementModal';
 
 class Blog extends Component {
@@ -41,7 +40,9 @@ class Blog extends Component {
       avatarObject: {},
       imageObject: {},
       errors: {},
-      editBlog: false
+      editBlog: false,
+      avatarCopyright: '',
+      imageCopyright: ''
     };
   }
   componentDidMount() {
@@ -166,11 +167,14 @@ class Blog extends Component {
     if (this.state.avatarObject.name) {
       const formData = new FormData();
       formData.append('blogAvatar', this.state.avatarObject);
-      const configData = {
+      let configData = {
         headers: {
           'content-type': 'multipart/form/data'
         }
       };
+      if (this.state.avatarCopyright) {
+        configData.headers.copyright = this.state.avatarCopyright;
+      }
       this.props.uploadBlogAvatar(formData, configData, this.state._id);
     } else {
       let updatedErrors = this.state.errors;
@@ -210,11 +214,14 @@ class Blog extends Component {
     if (this.state.imageObject.name) {
       const formData = new FormData();
       formData.append('blogImage', this.state.imageObject);
-      const configData = {
+      let configData = {
         headers: {
           'content-type': 'multipart/form/data'
         }
       };
+      if (this.state.imageCopyright) {
+        configData.headers.copyright = this.state.imageCopyright;
+      }
       this.props.editElementImage(formData, configData, this.state._id, id);
     } else {
       let updatedErrors = this.state.errors;
@@ -233,6 +240,9 @@ class Blog extends Component {
           'content-type': 'multipart/form/data'
         }
       };
+      if (this.state.imageCopyright) {
+        configData.headers.copyright = this.state.imageCopyright;
+      }
       this.props.addElementImage(formData, configData, this.state._id);
     } else {
       let updatedErrors = this.state.errors;
@@ -279,6 +289,8 @@ class Blog extends Component {
                   onDeleteAvatar={this.onDeleteAvatar}
                   errors={errors}
                   avatarObject={this.state.avatarObject}
+                  copyright={this.state.avatarCopyright}
+                  onChange={this.onChange}
                 />
               </section>
               {/* DETAILS IF ELSE ADMIN*/}
