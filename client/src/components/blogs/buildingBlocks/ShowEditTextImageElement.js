@@ -15,7 +15,7 @@ const ShowEditTextImageElement = ({
   errors
 }) => {
   return (
-    <div className="row mt-5 mx-5 px-5">
+    <div className="row mx-0 mx-lg-5 px-lg-5">
       {editBlog ? (
         <div className="col-12">
           {isAuthenticated &&
@@ -100,9 +100,11 @@ const ShowEditTextImageElement = ({
                   }}
                 ></div>
               ) : (
-                <div>
-                  <img src={element.image.location} alt="image icon" />
-                </div>
+                <img
+                  src={element.image.location}
+                  alt="image icon"
+                  className="img-fluid text-center"
+                />
               )}
             </div>
           ))}

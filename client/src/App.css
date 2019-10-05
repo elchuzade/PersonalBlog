@@ -38,12 +38,6 @@ body {
   border-width: 5px !important;
 }
 
-.premiumWebinarLink {
-  height: 100px;
-  margin-top: -100px;
-  text-align: center;
-}
-
 .isInvalidFeedback {
   margin-top: 0.25rem;
   display: block;

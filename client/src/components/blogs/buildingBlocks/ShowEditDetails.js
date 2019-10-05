@@ -23,7 +23,7 @@ const ShowEditDetails = ({
   author
 }) => {
   return (
-    <div className="row mt-5">
+    <div className="row mt-5 mx-0 mx-md-3">
       {editBlog ? (
         <div className="col-12 text-center">
           {isAuthenticated && (
