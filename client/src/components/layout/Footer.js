@@ -22,61 +22,33 @@ class Footer extends Component {
       </option>
     ));
     return (
-      <footer className="bg-info text-white mt-5 pt-3">
+      <footer className="bg-dark text-white mt-5 py-4">
         <div className="container">
           <div className="row">
-            <div className="col-12 col-md-6 col-lg-7">
-              <div className="row">
-                <div className="col-12 mb-1">
-                  <h4>
-                    <span className="h6">Personal Blog</span>
-                  </h4>
-                </div>
-                <div className="col-12 mb-2">
-                  <Link to="/" className="mr-2 text-white">
-                    Blog
-                  </Link>
-                  <Link to="/contacts" className="mx-2 text-white">
-                    Contacts
-                  </Link>
-                </div>
-                <div className="col-12">
-                  <p>
-                    Copyright &copy; {new Date().getFullYear()} Kamran Elchuzade
-                  </p>
-                </div>
-              </div>
+            <div className="col-6">
+              <span className="align-middle">Personal Blog</span>
             </div>
-            <div className="col-12 col-md-6 col-lg-5 mb-5 order-first order-md-2">
-              <form
-                className="text-center"
-                method="POST"
-                action="https://formspree.io/webinartrack@gmail.com"
-              >
-                <div className="form-row">
-                  <div className="col-5">
-                    <input
-                      name="email"
-                      type="email"
-                      className="form-control form-control-sm"
-                      placeholder="email"
-                    />
-                  </div>
-                  <div className="col-4">
-                    <select
-                      name="category"
-                      className="form-control form-control-sm"
-                    >
-                      {selectOptions}
-                    </select>
-                  </div>
-                  <div className="col-3">
-                    <button className="btn btn-light btn-sm px-2" type="submit">
-                      Submit
-                    </button>
-                  </div>
-                </div>
-              </form>
+            <div className="col-6 text-right">
+              <Link to="/" className="mx-2 align-middle">
+                Blog
+              </Link>
+              <Link to="/contacts" className="mx-2 align-middle">
+                Contacts
+              </Link>
+              <span className="mx-2 align-middle">
+                <i class="fab fa-github fa-2x"></i>
+              </span>
+              <span className="mx-2">
+                <i class="fab fa-linkedin fa-2x align-middle"></i>
+              </span>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12 text-center">
+              <span>
+                Copyright © {new Date().getFullYear()} Kamran Elchuzade. All
+                rights reserved.
+              </span>
             </div>
           </div>
         </div>

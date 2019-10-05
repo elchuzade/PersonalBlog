@@ -30,7 +30,7 @@ class BlogCard extends Component {
               />
             </Link>
           </div>
-          <div className="card-body" style={{ minHeight: '240px' }}>
+          <div className="card-body bloCardBody" style={{ minHeight: '240px' }}>
             <h5 className="card-title">
               <Link
                 className="text-center blogCardTitle"
@@ -59,7 +59,7 @@ class BlogCard extends Component {
               <div className="col text-right">
                 <span className="mb-3">
                   <Link
-                    className="btn btn-info btn-sm mb-2 mx-1 mb-md-0"
+                    className="btn btn-secondary btn-sm mb-2 mx-1 mb-md-0"
                     to={`/blogs/${blog._id}`}
                   >
                     check out
@@ -67,13 +67,13 @@ class BlogCard extends Component {
                   {isAuthenticated && (
                     <React.Fragment>
                       <button
-                        className="btn btn-warning btn-sm mx-1 mb-2 mb-md-0 "
+                        className="btn btn-secondary btn-sm mx-1 mb-2 mb-md-0 "
                         onClick={this.props.onEditBlogClick}
                       >
                         EDIT
                       </button>
                       <button
-                        className="btn btn-danger btn-sm mx-1 mb-2 mb-md-0"
+                        className="btn btn-dark btn-sm mx-1 mb-2 mb-md-0"
                         onClick={this.onDeleteBlog}
                       >
                         DELETE

@@ -47,11 +47,11 @@ const TextElementModal = ({
           </div>
         </ModalBody>
         <ModalFooter>
-          <button className="btn mainButton" type="submit">
+          <button className="btn btn-secondary mainButton" type="submit">
             Submit
           </button>
           <button
-            className="btn btn-danger"
+            className="btn btn-secondary"
             type="button"
             onClick={toggleModal}
           >

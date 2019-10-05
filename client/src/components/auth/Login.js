@@ -56,7 +56,7 @@ class Login extends Component {
               <div className="card">
                 <div className="card-header p-0">
                   <div className="row text-center text-white mx-0">
-                    <div className="col-6 bg-info p-0">
+                    <div className="col-6 bg-secondary p-0">
                       <p className="py-1 lead m-0">
                         <b>Sign In</b>
                       </p>
@@ -97,11 +97,9 @@ class Login extends Component {
                         error={errors.password}
                       />
                     </div>
-                    <input
-                      type="submit"
-                      value="Sign In"
-                      className="btn btn-info btn-block"
-                    />
+                    <button type="submit" className="btn btn-dark btn-block">
+                      Sign In
+                    </button>
                   </form>
                 </div>
               </div>

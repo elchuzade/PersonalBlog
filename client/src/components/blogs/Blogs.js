@@ -111,14 +111,17 @@ class Blogs extends Component {
                 <h3 className="text-center">
                   {isAuthenticated && (
                     <button
-                      className="btn btn-info mr-3"
+                      className="btn btn-secondary mr-3"
                       onClick={this.openModal}
                     >
                       <i className="fas fa-plus" />
                     </button>
                   )}
-                  Blogs
+                  Latest Posts
                 </h3>
+                <p className="lead text-center">
+                  Articles about software-related events, topics, problems and solutions.
+                </p>
               </div>
             </div>
             {spinner}

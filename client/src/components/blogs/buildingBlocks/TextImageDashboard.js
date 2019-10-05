@@ -6,14 +6,14 @@ const TextImageDashboard = ({ openTextModal, openImageModal }) => {
     <div className="row my-3">
       <div className="col-6">
         <h3 className="text-center">
-          <button className="btn btn-info btn-lg mr-3" onClick={openTextModal}>
+          <button className="btn btn-secondary btn-lg mr-3" onClick={openTextModal}>
             <i className="fas fa-font" />
           </button>
         </h3>
       </div>
       <div className="col-6">
         <h3 className="text-center">
-          <button className="btn btn-info btn-lg mr-3" onClick={openImageModal}>
+          <button className="btn btn-secondary btn-lg mr-3" onClick={openImageModal}>
             <i class="fas fa-image" />
           </button>
         </h3>

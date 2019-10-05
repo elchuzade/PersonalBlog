@@ -46,7 +46,7 @@ class Contacts extends Component {
                   </div>
                   <div className="row mb-5">
                     <div className="col text-center">
-                      <button className="btn btn-info" type="submit">
+                      <button className="btn btn-secondary" type="submit">
                         Submit
                       </button>
                     </div>

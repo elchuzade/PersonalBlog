@@ -65,7 +65,7 @@ class Register extends Component {
                         </p>
                       </Link>
                     </div>
-                    <div className="col-6 bg-info p-0">
+                    <div className="col-6 bg-secondary p-0">
                       <p className="py-1 lead m-0">
                         <b>Sign Up</b>
                       </p>
@@ -120,7 +120,7 @@ class Register extends Component {
                     <input
                       type="submit"
                       value="Sign Up"
-                      className="btn btn-info btn-block"
+                      className="btn btn-dark btn-block"
                     />
                   </form>
                 </div>

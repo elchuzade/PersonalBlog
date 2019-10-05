@@ -29,21 +29,21 @@ const BlogDashboard = ({
       ) : (
         <div>
           <button
-            className="btn btn-warning m-2 py-3 text-white dashboardBtn"
+            className="btn btn-secondary m-2 py-3 text-white dashboardBtn"
             onClick={toggleEdit}
           >
             <i className="fas fa-pen" />
           </button>
           <br />
           <button
-            className="btn btn-info m-2 py-3 text-white dashboardBtn"
+            className="btn btn-secondary m-2 py-3 text-white dashboardBtn"
             onClick={openTextModal}
           >
             <i className="fas fa-font" />
           </button>
           <br />
           <button
-            className="btn btn-info m-2 py-3 text-white dashboardBtn"
+            className="btn btn-secondary m-2 py-3 text-white dashboardBtn"
             onClick={openImageModal}
           >
             <i className="fas fa-image" />

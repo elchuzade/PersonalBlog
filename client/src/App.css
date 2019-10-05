@@ -1,6 +1,24 @@
 body {
-  background: #2d2d2d;
+  background: rgb(32, 33, 36);
   padding-top: 60px;
+}
+
+.bg-dark {
+  background: rgb(50, 54, 57) !important;
+}
+
+.card {
+  background: rgb(40, 44, 47);
+  color: white;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: white;
 }
 a {
   color: inherit;
@@ -14,7 +32,7 @@ a:hover {
 #signUpLink:hover,
 #signInLink:hover {
   color: black !important;
-  background: rgba(23, 162, 184, 0.2);
+  background: rgba(108, 117, 125, 0.2);
 }
 
 .copyrightLink {
@@ -40,12 +58,8 @@ a:hover {
   height: 200px;
 }
 
-.card-body {
+.bloCardBody {
   height: 200px;
-}
-
-.card-body {
-  background: white;
 }
 
 .blogCardTitle {
@@ -79,7 +93,7 @@ a:hover {
 }
 
 .loader {
-  color: rgb(0, 165, 187);
+  color: rgb(108, 117, 125);
   font-size: 45px;
   text-indent: -9999em;
   overflow: hidden;
