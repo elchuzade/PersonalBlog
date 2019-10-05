@@ -67,7 +67,6 @@ router.post(
     }
     const blogFields = {};
     if (req.body.title) blogFields.title = req.body.title;
-    if (req.body.intro) blogFields.intro = req.body.intro;
     if (req.body.author) blogFields.author = req.body.author;
     new Blog(blogFields)
       .save()

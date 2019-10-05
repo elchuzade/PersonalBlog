@@ -5,7 +5,6 @@ module.exports = function validateBlogInput(data) {
   let errors = {};
 
   data.title = !isEmpty(data.title) ? data.title : '';
-  data.intro = !isEmpty(data.intro) ? data.intro : '';
   data.author = !isEmpty(data.author) ? data.author : '';
 
   if (!Validator.isLength(data.title, { min: 2, max: 100 })) {
@@ -13,9 +12,6 @@ module.exports = function validateBlogInput(data) {
   }
   if (Validator.isEmpty(data.title)) {
     errors.title = 'Title is required';
-  }
-  if (Validator.isEmpty(data.intro)) {
-    errors.intro = 'Intro is required';
   }
   if (Validator.isEmpty(data.author)) {
     errors.author = 'Author is required';

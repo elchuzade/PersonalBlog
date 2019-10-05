@@ -10,7 +10,6 @@ import {
 import { refreshErrors } from '../../actions/commonActions';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import TextInput from '../common/TextInput';
-import TextareaInput from '../common/TextareaInput';
 import BlogCard from '../blogs/BlogCard';
 
 class Blogs extends Component {
@@ -21,7 +20,6 @@ class Blogs extends Component {
       modal: false,
       id: '',
       title: '',
-      intro: '',
       author: ''
     };
   }
@@ -46,7 +44,6 @@ class Blogs extends Component {
     this.setState({
       id: blog._id,
       title: blog.title,
-      intro: blog.intro,
       author: blog.author,
       modal: true,
       edit: true
@@ -78,7 +75,6 @@ class Blogs extends Component {
     e.preventDefault();
     const newBlog = {
       title: this.state.title,
-      intro: this.state.intro,
       author: this.state.author
     };
     if (this.state.edit) {
@@ -91,7 +87,6 @@ class Blogs extends Component {
     this.setState({
       modal: false,
       title: '',
-      intro: '',
       author: ''
     });
   };
@@ -170,18 +165,6 @@ class Blogs extends Component {
                         placeholder="title"
                         label="title"
                         error={errors.title}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="form-group">
-                      <TextareaInput
-                        name="intro"
-                        value={this.state.intro}
-                        onChange={this.onChange}
-                        placeholder="intro"
-                        label="intro"
-                        error={errors.intro}
                       />
                     </div>
                   </div>
