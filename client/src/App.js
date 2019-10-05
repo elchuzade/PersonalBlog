@@ -9,16 +9,14 @@ import { setCurrentUser, logoutUser } from './actions/authActions';
 import { Provider } from 'react-redux';
 import store from './store';
 
-import PrivateRoute from './components/common/PrivateRoute';
-
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Contacts from './components/layout/Contacts';
 import Blogs from './components/blogs/Blogs';
 import Blog from './components/blogs/Blog';
+import NotFound from './components/layout/NotFound';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -38,23 +36,26 @@ if (localStorage.jwtToken) {
   }
 }
 
-function App() {
+const App = () => {
   return (
     <Provider store={store}>
-      <Router>
-        <div className="App">
+      <div className="App">
+        <Router>
           <Navbar />
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/boss/register" component={Register} />
-          <Route exact path="/boss/login" component={Login} />
-          <Route exact path="/blogs" component={Blogs} />
-          <Route exact path="/blogs/:id" component={Blog} />
-          <Route exact path="/contacts" component={Contacts} />
+          <Switch>
+            <Route exact path="/" component={Blogs} />
+            <Route exact path="/boss/register" component={Register} />
+            <Route exact path="/boss/login" component={Login} />
+            <Route exact path="/blogs" component={Blogs} />
+            <Route exact path="/blogs/:id" component={Blog} />
+            <Route exact path="/contacts" component={Contacts} />
+            <Route path="*" component={NotFound} />
+          </Switch>
           <Footer />
-        </div>
-      </Router>
+        </Router>
+      </div>
     </Provider>
   );
-}
+};
 
 export default App;
