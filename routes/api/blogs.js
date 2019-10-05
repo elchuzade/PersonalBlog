@@ -250,7 +250,7 @@ router.delete(
       .then(blog => {
         let deleteObjects = [];
         let deleteBucket = '';
-        if (blog.avatar.key || blog.cover.key) {
+        if (blog.avatar && blog.avatar.key) {
           if (blog.avatar && blog.avatar.key) {
             deleteBucket = blog.avatar.bucket;
             deleteObjects.push({ Key: blog.avatar.key });

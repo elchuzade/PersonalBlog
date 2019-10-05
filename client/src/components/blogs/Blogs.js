@@ -8,9 +8,9 @@ import {
   deleteBlog
 } from '../../actions/blogActions';
 import { refreshErrors } from '../../actions/commonActions';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import TextInput from '../common/TextInput';
 import BlogCard from '../blogs/BlogCard';
+
+import NewBlogModal from './buildingBlocks/NewBlogModal';
 
 class Blogs extends Component {
   constructor(props) {
@@ -20,7 +20,8 @@ class Blogs extends Component {
       modal: false,
       id: '',
       title: '',
-      author: ''
+      author: '',
+      editBlog: false
     };
   }
   componentDidMount() {
@@ -46,7 +47,7 @@ class Blogs extends Component {
       title: blog.title,
       author: blog.author,
       modal: true,
-      edit: true
+      editBlog: true
     });
   };
   toggleModal = e => {
@@ -68,7 +69,7 @@ class Blogs extends Component {
   openModal = e => {
     e.preventDefault();
     if (!this.state.modal) {
-      this.setState({ modal: true });
+      this.setState({ modal: true, editBlog: false });
     }
   };
   submitModal = e => {
@@ -77,7 +78,7 @@ class Blogs extends Component {
       title: this.state.title,
       author: this.state.author
     };
-    if (this.state.edit) {
+    if (this.state.editBlog) {
       this.props.editBlog(this.state.id, newBlog);
     } else {
       this.props.addBlog(newBlog);
@@ -85,6 +86,7 @@ class Blogs extends Component {
   };
   resetModal = () => {
     this.setState({
+      editBlog: false,
       modal: false,
       title: '',
       author: ''
@@ -123,80 +125,34 @@ class Blogs extends Component {
             {!spinner && (
               <React.Fragment>
                 <div className="row">
-                    {blogs.map(blog => (
-                      <div
+                  {blogs.map(blog => (
+                    <div key={blog._id} className="col-12 col-md-6 mb-3">
+                      <BlogCard
                         key={blog._id}
-                        className="col-12 col-md-6 mb-3"
-                      >
-                        <BlogCard
-                          key={blog._id}
-                          blog={blog}
-                          onEditBlogClick={e => {
-                            this.onEditBlog(e, blog);
-                          }}
-                        />
-                      </div>
-                    ))}
+                        blog={blog}
+                        onEditBlogClick={e => {
+                          this.onEditBlog(e, blog);
+                        }}
+                      />
+                    </div>
+                  ))}
                 </div>
               </React.Fragment>
             )}
           </div>
         </section>
         {/* MODAL */}
-        <Modal
-          isOpen={this.state.modal}
-          toggle={this.toggleModal}
-          size="lg"
-          onClosed={this.resetModal}
-        >
-          <form onSubmit={this.submitModal}>
-            <ModalHeader className="text-info">
-              {this.state.edit ? <span>Edit</span> : <span>Add</span>} Blog
-            </ModalHeader>
-            <ModalBody>
-              <div className="container">
-                <div className="row">
-                  <div className="col-12">
-                    <div className="form-group">
-                      <TextInput
-                        name="title"
-                        value={this.state.title}
-                        onChange={this.onChange}
-                        placeholder="title"
-                        label="title"
-                        error={errors.title}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="form-group">
-                      <TextInput
-                        name="author"
-                        value={this.state.author}
-                        onChange={this.onChange}
-                        placeholder="author"
-                        label="author"
-                        error={errors.author}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ModalBody>
-            <ModalFooter>
-              <button className="btn mainButton" type="submit">
-                Submit
-              </button>
-              <button
-                className="btn btn-danger"
-                type="button"
-                onClick={this.toggleModal}
-              >
-                Cancel
-              </button>
-            </ModalFooter>
-          </form>
-        </Modal>
+        <NewBlogModal
+          modal={this.state.modal}
+          toggleModal={this.toggleModal}
+          resetModal={this.resetModal}
+          submitModal={this.submitModal}
+          title={this.state.title}
+          onChange={this.onChange}
+          errors={errors}
+          author={this.state.author}
+          editBlog={this.state.editBlog}
+        />
       </div>
     );
   }
