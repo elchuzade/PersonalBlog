@@ -18,7 +18,7 @@ class BlogCard extends Component {
       <div>
         <div className="card">
           <div className="blogCardDiv">
-            <Link to={`/blogs/${blog._id}`}>
+            <Link to={`/blogs/${blog.url}`}>
               <img
                 className="card-img-top"
                 src={
@@ -34,7 +34,7 @@ class BlogCard extends Component {
             <h5 className="card-title">
               <Link
                 className="text-center blogCardTitle"
-                to={`/blogs/${blog._id}`}
+                to={`/blogs/${blog.url}`}
               >
                 <h3>{blog.title}</h3>
               </Link>
@@ -60,7 +60,7 @@ class BlogCard extends Component {
                 <span className="mb-3">
                   <Link
                     className="btn btn-secondary btn-sm mb-2 mx-1 mb-md-0"
-                    to={`/blogs/${blog._id}`}
+                    to={`/blogs/${blog.url}`}
                   >
                     check out
                   </Link>
