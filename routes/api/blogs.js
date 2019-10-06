@@ -11,7 +11,7 @@ const upload = require('../files');
 const blogAvatar = upload.uploadBlogAvatar.single('blogAvatar');
 const blogImage = upload.uploadBlogImage.single('blogImage');
 
-const ConvertTitleToUrl = require('../titleUrlConverter').ConvertTitleToUrl;
+const ConvertTitleToUrl = require('../titleUrlConverter').convertTitleToUrl;
 
 aws.config.update({
   secretAccessKey: config.secretAccessKey,
@@ -39,18 +39,24 @@ router.get('/', (req, res) => {
 });
 
 // @route GET api/blogs/:id
-// @desc Get single blog by id
+// @desc Get single blog by id (id may be also friendly url)
 // @access Public
 router.get('/:id', (req, res) => {
   const errors = {};
-  Blog.findById(req.params.id)
+  Blog.findOne({ url: req.params.id })
     .then(foundBlog => {
       res.json(foundBlog);
     })
     .catch(err => {
-      errors.blog = 'Blog not found';
-      console.log(err);
-      res.status(404).json(errors);
+      Blog.findById(req.params.id)
+        .then(foundBlog => {
+          res.json(foundBlog);
+        })
+        .catch(err => {
+          errors.blog = 'Blog not found';
+          console.log(err);
+          res.status(404).json(errors);
+        });
     });
 });
 

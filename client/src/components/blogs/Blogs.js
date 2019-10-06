@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import {
   getBlogs,
@@ -104,6 +105,14 @@ class Blogs extends Component {
     }
     return (
       <div>
+        <Helmet>
+          <title>Latest Posts</title>
+          <meta
+            name="description"
+            content="Articles about software-related tools, events, problems and
+                  solutions."
+          />
+        </Helmet>
         <section id="blogs">
           <div className="container">
             <div className="row my-3">
@@ -120,7 +129,8 @@ class Blogs extends Component {
                   Latest Posts
                 </h3>
                 <p className="lead text-center">
-                  Articles about software-related tools, events, problems and solutions.
+                  Articles about software-related tools, events, problems and
+                  solutions.
                 </p>
               </div>
             </div>

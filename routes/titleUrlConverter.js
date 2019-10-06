@@ -1,4 +1,4 @@
-const ConvertTitleToUrl = title => {
+const convertTitleToUrl = title => {
   let url = '';
   for (let i = 0; i < title.length; i++) {
     if (title[i] == ' ') {
@@ -10,4 +10,4 @@ const ConvertTitleToUrl = title => {
   return url;
 };
 
-module.exports.ConvertTitleToUrl = ConvertTitleToUrl;
+module.exports.convertTitleToUrl = convertTitleToUrl;
