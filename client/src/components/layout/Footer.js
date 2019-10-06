@@ -1,34 +1,37 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 
 class Footer extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      dark: false
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.theme) {
+      this.setState({ dark: nextProps.theme.dark });
+    }
   }
 
   render() {
-    const optionsCategory = [
-      { label: 'Others', value: 'Others' },
-      { label: 'Business', value: 'Business' },
-      { label: 'Wealth', value: 'Wealth' },
-      { label: 'Health', value: 'Health' }
-    ];
-    const selectOptions = optionsCategory.map(option => (
-      <option key={option.label} value={option.value}>
-        {option.label}
-      </option>
-    ));
     return (
-      <footer className="bg-dark text-white mt-5 py-4">
+      <footer
+        className={classnames('mt-5 py-4', {
+          'bg-dark text-white': this.state.dark,
+          'bg-light text-black': !this.state.dark
+        })}
+      >
         <div className="container">
           <div className="row">
-            <div className="col-6">
+            <div className="col-4">
               <span className="align-middle">Personal Blog</span>
             </div>
-            <div className="col-6 text-right">
+            <div className="col-8 text-right">
               <Link to="/" className="mx-2 align-middle">
                 Blog
               </Link>
@@ -61,11 +64,11 @@ class Footer extends Component {
   }
 }
 
-Footer.propTypes = {};
-
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  theme: state.theme
+});
 
 export default connect(
   mapStateToProps,
   {}
-)(Footer);
+)(withRouter(Footer));

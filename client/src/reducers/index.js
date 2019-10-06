@@ -3,10 +3,12 @@ import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import responseReducer from './responseReducer';
 import blogReducer from './blogReducer';
+import themeReducer from './themeReducer';
 
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,
   blogs: blogReducer,
-  response: responseReducer
+  response: responseReducer,
+  theme: themeReducer
 });

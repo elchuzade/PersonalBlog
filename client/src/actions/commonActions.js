@@ -1,4 +1,11 @@
-import { GET_ERRORS, GET_RESPONSE, BLOGS_LOADING } from './types';
+import { GET_ERRORS, GET_RESPONSE, BLOGS_LOADING, GET_THEME } from './types';
+
+export const changeTheme = dark => {
+  return {
+    type: GET_THEME,
+    payload: dark
+  };
+};
 
 export const refreshErrors = () => {
   return {
