@@ -54,7 +54,7 @@ const ShowEditAvatar = ({
             <div className="row mt-2 mb-5">
               <div className="col">
                 <button
-                  className="btn btn-dark mx-2"
+                  className="btn btn-danger mx-2"
                   onClick={onDeleteAvatar}
                 >
                   Delete

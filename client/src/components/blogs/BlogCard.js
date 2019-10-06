@@ -73,7 +73,7 @@ class BlogCard extends Component {
                         EDIT
                       </button>
                       <button
-                        className="btn btn-dark btn-sm mx-1 mb-2 mb-md-0"
+                        className="btn btn-danger btn-sm mx-1 mb-2 mb-md-0"
                         onClick={this.onDeleteBlog}
                       >
                         DELETE

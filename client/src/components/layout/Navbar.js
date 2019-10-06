@@ -49,7 +49,13 @@ class Navbar extends Component {
       >
         {this.state.dark && (
           <Helmet>
-            <style>{'body { background-color: rgb(32, 33, 36); }'}</style>
+            <style>{'body { background-color: #202124; }'}</style>
+            <style>{'h1,h2,h3,h4,h5,h6,p { color: #FFFFFF; }'}</style>
+            <style>{'.card { background: #282C2F }'}</style>
+            <style>{'.card-footer { background: #323639 }'}</style>
+            <style>{'.modal-header, .modal-footer { background: #202124 }'}</style>
+            <style>{'.modal-body { background: #323639 }'}</style>
+            <style>{'.modal-content { color: #FFFFFF }'}</style>
           </Helmet>
         )}
         <div className="container">

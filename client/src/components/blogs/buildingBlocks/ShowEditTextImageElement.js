@@ -35,7 +35,7 @@ const ShowEditTextImageElement = ({
                     <div className="row mt-2 mb-5">
                       <div className="col text-center">
                         <button
-                          className="btn btn-dark mx-2"
+                          className="btn btn-danger mx-2"
                           onClick={(e, id = element._id) =>
                             DeleteTextElement(e, id)
                           }
@@ -83,7 +83,7 @@ const ShowEditTextImageElement = ({
                       <div className="row mt-2 mb-5">
                         <div className="col text-center">
                           <button
-                            className="btn btn-dark mx-2"
+                            className="btn btn-danger mx-2"
                             onClick={e => onDeleteImage(e, element._id)}
                           >
                             Delete

@@ -11,20 +11,6 @@ body {
   margin-top: 6px;
 }
 
-.card {
-  background: rgb(40, 44, 47);
-  color: white;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  color: white;
-}
 a {
   color: inherit;
   text-decoration: none;
@@ -44,18 +30,9 @@ a:hover {
   border: none;
 }
 
-form {
-  background: rgb(32, 33, 36) !important;
-}
-
 .modal-header,
 .modal-footer {
   border: none;
-  background: rgb(32, 33, 36) !important;
-}
-.modal-body {
-  background: rgb(50, 54, 57) !important;
-  color: white;
 }
 
 .copyrightLink {
