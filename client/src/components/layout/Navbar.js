@@ -16,6 +16,11 @@ class Navbar extends Component {
 
   handleChange = checked => {
     this.setState({ checked });
+    if (checked) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
   };
 
   onLogoutClick = e => {
@@ -55,12 +60,6 @@ class Navbar extends Component {
                   About
                 </Link>
               </li>
-              <li className="nav-item navbarSwitch">
-                <Switch
-                  onChange={this.handleChange}
-                  checked={this.state.checked}
-                />
-              </li>
               {isAuthenticated && (
                 <React.Fragment>
                   <li className="nav-item">
@@ -79,6 +78,12 @@ class Navbar extends Component {
                   </li>
                 </React.Fragment>
               )}
+              <li className="nav-item navbarSwitch">
+                <Switch
+                  onChange={this.handleChange}
+                  checked={this.state.checked}
+                />
+              </li>
             </ul>
           </div>
         </div>
