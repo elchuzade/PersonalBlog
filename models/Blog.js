@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 // Create Schema
 const BlogSchema = new Schema(
   {
+    url: {
+      type: String,
+      required: true
+    },
     avatar: {
       copyright: {
         type: String

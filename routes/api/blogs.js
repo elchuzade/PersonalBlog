@@ -11,6 +11,8 @@ const upload = require('../files');
 const blogAvatar = upload.uploadBlogAvatar.single('blogAvatar');
 const blogImage = upload.uploadBlogImage.single('blogImage');
 
+const ConvertTitleToUrl = require('../titleUrlConverter').ConvertTitleToUrl;
+
 aws.config.update({
   secretAccessKey: config.secretAccessKey,
   accessKeyId: config.accessKeyId,
@@ -66,8 +68,9 @@ router.post(
       return res.status(400).json(errors);
     }
     const blogFields = {};
-    if (req.body.title) blogFields.title = req.body.title;
-    if (req.body.author) blogFields.author = req.body.author;
+    blogFields.title = req.body.title;
+    blogFields.url = ConvertTitleToUrl(blogFields.title);
+    blogFields.author = req.body.author;
     new Blog(blogFields)
       .save()
       .then(newBlog => {
@@ -101,6 +104,7 @@ router.put(
     Blog.findById(req.params.id)
       .then(blog => {
         blog.title = req.body.title;
+        blog.url = ConvertTitleToUrl(blog.title);
         blog.intro = req.body.intro;
         blog.author = req.body.author;
         blog

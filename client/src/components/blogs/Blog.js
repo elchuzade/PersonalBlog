@@ -270,7 +270,7 @@ class Blog extends Component {
           <React.Fragment>
             <Helmet>
               <title>{blog.title}</title>
-              <meta name="description">{blog.intro}</meta>
+              <meta name="description" content={blog.intro} />
             </Helmet>
             {isAuthenticated && (
               <section id="dashboard">
