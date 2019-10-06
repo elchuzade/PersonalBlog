@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import {
   getBlog,
@@ -267,6 +268,10 @@ class Blog extends Component {
       <div>
         {!spinner && (
           <React.Fragment>
+            <Helmet>
+              <title>{blog.title}</title>
+              <meta name="description">{blog.intro}</meta>
+            </Helmet>
             {isAuthenticated && (
               <section id="dashboard">
                 <BlogDashboard

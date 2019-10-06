@@ -120,7 +120,7 @@ class Blogs extends Component {
                   Latest Posts
                 </h3>
                 <p className="lead text-center">
-                  Articles about software-related events, topics, problems and solutions.
+                  Articles about software-related tools, events, problems and solutions.
                 </p>
               </div>
             </div>
