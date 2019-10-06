@@ -15,9 +15,14 @@ const NewBlogModal = ({
   editBlog
 }) => {
   return (
-    <Modal isOpen={modal} toggle={toggleModal} size="lg" onClosed={resetModal}>
+    <Modal
+      isOpen={modal}
+      toggle={toggleModal}
+      size="lg"
+      onClosed={resetModal}
+    >
       <form onSubmit={submitModal}>
-        <ModalHeader className="text-info">
+        <ModalHeader>
           {editBlog ? <span>Edit</span> : <span>Add</span>} Blog
         </ModalHeader>
         <ModalBody>
@@ -55,7 +60,7 @@ const NewBlogModal = ({
             Submit
           </button>
           <button
-            className="btn btn-secondary"
+            className="btn btn-dark"
             type="button"
             onClick={toggleModal}
           >

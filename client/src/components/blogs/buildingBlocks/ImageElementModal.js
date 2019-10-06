@@ -47,7 +47,7 @@ const ImageElementModal = ({
             Submit
           </button>
           <button
-            className="btn btn-secondary"
+            className="btn btn-dark"
             type="button"
             onClick={toggleModal}
           >

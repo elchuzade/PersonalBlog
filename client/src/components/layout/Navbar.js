@@ -4,19 +4,25 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
+import Switch from 'react-switch';
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.onLogoutClick = this.onLogoutClick.bind(this);
+    this.state = {
+      checked: false
+    };
   }
 
-  onLogoutClick(e) {
+  handleChange = checked => {
+    this.setState({ checked });
+  };
+
+  onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
     window.location.href = '/';
-  }
+  };
 
   render() {
     const { isAuthenticated } = this.props.auth;
@@ -44,10 +50,16 @@ class Navbar extends Component {
                   Blog
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item mr-2">
                 <Link className="nav-link" to="/contacts">
                   About
                 </Link>
+              </li>
+              <li className="nav-item navbarSwitch">
+                <Switch
+                  onChange={this.handleChange}
+                  checked={this.state.checked}
+                />
               </li>
               {isAuthenticated && (
                 <React.Fragment>

@@ -7,10 +7,15 @@ body {
   background: rgb(50, 54, 57) !important;
 }
 
+.navbarSwitch {
+  margin-top: 6px;
+}
+
 .card {
   background: rgb(40, 44, 47);
   color: white;
 }
+
 h1,
 h2,
 h3,
@@ -33,6 +38,24 @@ a:hover {
 #signInLink:hover {
   color: black !important;
   background: rgba(108, 117, 125, 0.2);
+}
+
+.modal-content {
+  border: none;
+}
+
+form {
+  background: rgb(32, 33, 36) !important;
+}
+
+.modal-header,
+.modal-footer {
+  border: none;
+  background: rgb(32, 33, 36) !important;
+}
+.modal-body {
+  background: rgb(50, 54, 57) !important;
+  color: white;
 }
 
 .copyrightLink {
