@@ -1,10 +1,18 @@
 body {
   padding-top: 60px;
-  /* rgb(32, 33, 36) */
 }
 
 .bg-dark {
-  background: rgb(50, 54, 57) !important;
+  background: #323639 !important;
+  /* background: #C0b283 !important; */
+}
+
+.card-img-top {
+  border-bottom: 5px solid transparent;
+}
+
+.card-img-top:hover {
+  border-bottom: 5px solid #C0b283;
 }
 
 .navbarSwitch {
@@ -26,15 +34,6 @@ a:hover {
   background: rgba(108, 117, 125, 0.2);
 }
 
-.modal-content {
-  border: none;
-}
-
-.modal-header,
-.modal-footer {
-  border: none;
-}
-
 .copyrightLink {
   border-radius: 20px;
   background: rgb(20, 20, 20);
@@ -54,12 +53,13 @@ a:hover {
   min-width: 48px;
 }
 
-.blogCardDiv {
-  height: 200px;
+.blogCardHeaderDiv {
+  max-height: 200px;
 }
 
 .bloCardBody {
   height: 200px;
+  min-height: '240px'
 }
 
 .blogCardTitle {

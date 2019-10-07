@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authActions';
 import TextInput from '../common/TextInput';
+import Helmet from 'react-helmet';
 
 class Login extends Component {
   constructor() {
@@ -50,6 +51,9 @@ class Login extends Component {
     const { errors } = this.state;
     return (
       <section id="login">
+        <Helmet>
+          <style>{'footer { position: absolute; width: 100%; bottom: 0; }'}</style>
+        </Helmet>
         <div className="container">
           <div className="row mt-5">
             <div className="col-md-6 mx-auto">
@@ -97,7 +101,10 @@ class Login extends Component {
                         error={errors.password}
                       />
                     </div>
-                    <button type="submit" className="btn btn-dark btn-block">
+                    <button
+                      type="submit"
+                      className="btn btn-secondary btn-block"
+                    >
                       Sign In
                     </button>
                   </form>

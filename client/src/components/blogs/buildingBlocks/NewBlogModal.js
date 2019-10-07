@@ -60,7 +60,7 @@ const NewBlogModal = ({
             Submit
           </button>
           <button
-            className="btn btn-dark"
+            className="btn btn-danger"
             type="button"
             onClick={toggleModal}
           >

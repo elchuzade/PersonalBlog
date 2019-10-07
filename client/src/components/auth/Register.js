@@ -117,11 +117,12 @@ class Register extends Component {
                         error={errors.password2}
                       />
                     </div>
-                    <input
+                    <button
                       type="submit"
-                      value="Sign Up"
-                      className="btn btn-dark btn-block"
-                    />
+                      className="btn btn-secondary btn-block"
+                    >
+                      Sign Up
+                    </button>
                   </form>
                 </div>
               </div>

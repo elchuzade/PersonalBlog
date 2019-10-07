@@ -12,12 +12,12 @@ class BlogCard extends Component {
   };
 
   render() {
-    const { blog } = this.props;
+    const { blog, hover } = this.props;
     const { isAuthenticated } = this.props.auth;
     return (
       <div>
         <div className="card">
-          <div className="blogCardDiv">
+          <div className="blogCardHeaderDiv">
             <Link to={`/blogs/${blog.url}`}>
               <img
                 className="card-img-top"
@@ -30,7 +30,7 @@ class BlogCard extends Component {
               />
             </Link>
           </div>
-          <div className="card-body bloCardBody" style={{ minHeight: '240px' }}>
+          <div className="card-body bloCardBody">
             <h5 className="card-title">
               <Link
                 className="text-center blogCardTitle"
@@ -94,7 +94,8 @@ BlogCard.propTypes = {
   auth: PropTypes.object.isRequired,
   blog: PropTypes.object.isRequired,
   deleteBlog: PropTypes.func.isRequired,
-  onEditBlogClick: PropTypes.func.isRequired
+  onEditBlogClick: PropTypes.func.isRequired,
+  hover: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({

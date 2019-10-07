@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Helmet from 'react-helmet';
 
 class Contacts extends Component {
   constructor(props) {
@@ -9,11 +10,16 @@ class Contacts extends Component {
   render() {
     return (
       <div>
+        <Helmet>
+          <style>
+            {'footer { position: absolute; width: 100%; bottom: 0; }'}
+          </style>
+        </Helmet>
         <section id="contactForm">
           <div className="container">
             <div className="row mt-5">
               <div className="col">
-                <h3 className="text-center">Contact Us</h3>
+                <h3 className="text-center">Contact Me</h3>
               </div>
             </div>
             <div className="row">

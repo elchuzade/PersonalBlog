@@ -45,7 +45,7 @@ const TextElementModal = ({
           <button className="btn btn-secondary mainButton" type="submit">
             Submit
           </button>
-          <button className="btn btn-dark" type="button" onClick={toggleModal}>
+          <button className="btn btn-danger" type="button" onClick={toggleModal}>
             Cancel
           </button>
         </ModalFooter>
