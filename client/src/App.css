@@ -57,8 +57,9 @@ a:hover {
   max-height: 200px;
 }
 
-.bloCardBody {
+.blogCardBody {
   height: 200px;
+  background:white;
   min-height: '240px'
 }
 

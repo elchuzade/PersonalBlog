@@ -30,7 +30,7 @@ class BlogCard extends Component {
               />
             </Link>
           </div>
-          <div className="card-body bloCardBody">
+          <div className="card-body blogCardBody">
             <h5 className="card-title">
               <Link
                 className="text-center blogCardTitle"

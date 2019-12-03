@@ -4,10 +4,12 @@ import {
   refreshErrors,
   refreshResponse,
   getError,
-  getResponse
+  getResponse,
+  setLoading
 } from './commonActions';
 
 export const getBlogs = () => dispatch => {
+  dispatch(setLoading('blog'));
   dispatch(refreshErrors());
   axios
     .get('/api/blogs')
@@ -23,6 +25,7 @@ export const getBlogs = () => dispatch => {
 };
 
 export const getBlog = id => dispatch => {
+  dispatch(setLoading('blog'));
   dispatch(refreshErrors());
   axios
     .get(`/api/blogs/${id}`)

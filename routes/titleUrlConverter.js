@@ -7,6 +7,12 @@ const convertTitleToUrl = title => {
       url += title[i];
     }
   }
+  for (let i = url.length; i >= 0; i--) {
+    if (url[i] === '!' || url[i] === '?' || url[i] === '.') {
+      console.log(url[i]);
+      url = url.slice(0, i);
+    }
+  }
   return url;
 };
 

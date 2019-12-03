@@ -31,7 +31,7 @@ if (localStorage.jwtToken) {
     // Logout user
     store.dispatch(logoutUser());
     // Redirect to login
-    window.location.href = '/login';
+    window.location.href = '/boss/login';
   }
 }
 
